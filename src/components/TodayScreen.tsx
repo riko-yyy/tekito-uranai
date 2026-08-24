@@ -5,6 +5,8 @@ interface Props {
   action: Action
   categoryLabel: string
   dateLabel: string
+  isFavorite: boolean
+  onToggleFavorite: () => void
   activeScreen: ScreenName
   onNavigate: (screen: ScreenName) => void
 }
@@ -20,10 +22,26 @@ function shareResult(action: Action, categoryLabel: string) {
   navigator.clipboard?.writeText(text)
 }
 
-export function TodayScreen({ action, categoryLabel, dateLabel, activeScreen, onNavigate }: Props) {
+export function TodayScreen({
+  action,
+  categoryLabel,
+  dateLabel,
+  isFavorite,
+  onToggleFavorite,
+  activeScreen,
+  onNavigate,
+}: Props) {
   return (
     <div className="screen active">
       <div className="today-card">
+        <button
+          type="button"
+          className={`today-star-toggle${isFavorite ? ' active' : ''}`}
+          aria-label="お気に入りに登録"
+          onClick={onToggleFavorite}
+        >
+          <i className="ti ti-star" />
+        </button>
         <p className="eyebrow">{dateLabel}の運勢</p>
         <h2>今日は&quot;{categoryLabel}&quot;の日</h2>
         <div className="today-icon">

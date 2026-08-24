@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import { BottomNav, type ScreenName } from './BottomNav'
 import type { HistoryEntry } from '../data/types'
-import { formatJapaneseDate } from '../lib/fortune'
+import { formatJapaneseDate, parseDateKey } from '../lib/fortune'
 
 type Tab = 'favlist' | 'premium'
 
 interface Props {
   favorites: HistoryEntry[]
+  onToggleFavorite: (dateKey: string) => void
   activeScreen: ScreenName
   onNavigate: (screen: ScreenName) => void
 }
 
-export function FavoritesScreen({ favorites, activeScreen, onNavigate }: Props) {
+export function FavoritesScreen({ favorites, onToggleFavorite, activeScreen, onNavigate }: Props) {
   const [tab, setTab] = useState<Tab>('favlist')
 
   return (
@@ -36,10 +37,17 @@ export function FavoritesScreen({ favorites, activeScreen, onNavigate }: Props) 
                 <i className={`ti ti-${entry.action.icon}`} />
               </div>
               <div className="history-body">
-                <p className="history-date">{formatJapaneseDate(new Date(entry.dateKey))}</p>
+                <p className="history-date">{formatJapaneseDate(parseDateKey(entry.dateKey))}</p>
                 <p className="history-title">{entry.action.text}</p>
               </div>
-              <i className="ti ti-star" />
+              <button
+                type="button"
+                className="fav-star-toggle"
+                aria-label="お気に入りから外す"
+                onClick={() => onToggleFavorite(entry.dateKey)}
+              >
+                <i className="ti ti-star" />
+              </button>
             </div>
           ))}
           {favorites.length === 0 && (
