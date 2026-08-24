@@ -1,0 +1,933 @@
+{
+  "$schema": "テキトー占い アクションパターンDB",
+  "iconSet": "tabler-icons",
+  "iconUsage": "アイコンクラス名は <i class=\"ti ti-{icon}\"></i> の {icon} 部分に対応",
+  "categories": [
+    {
+      "id": "life",
+      "label": "生活運"
+    },
+    {
+      "id": "social",
+      "label": "対人運"
+    },
+    {
+      "id": "work",
+      "label": "仕事運"
+    },
+    {
+      "id": "money",
+      "label": "金運"
+    },
+    {
+      "id": "health",
+      "label": "健康運"
+    },
+    {
+      "id": "mood",
+      "label": "気分運"
+    }
+  ],
+  "actions": [
+    {
+      "id": "action_001",
+      "category": "life",
+      "text": "いつもと違う道を1本、通ってみて",
+      "reason": "小さな発見が待ってるかも",
+      "actionRating": 4,
+      "luckyColor": "緑",
+      "icon": "map-pin-2"
+    },
+    {
+      "id": "action_002",
+      "category": "life",
+      "text": "今日はカバンの中身を軽くしてみて",
+      "reason": "身軽さが気分も軽くする",
+      "actionRating": 3,
+      "luckyColor": "白",
+      "icon": "backpack"
+    },
+    {
+      "id": "action_003",
+      "category": "social",
+      "text": "気になってた人に「最近どう？」と送ってみて",
+      "reason": "ちょっとした一言が縁をつなぐ",
+      "actionRating": 5,
+      "luckyColor": "黄色",
+      "icon": "message-circle"
+    },
+    {
+      "id": "action_004",
+      "category": "money",
+      "text": "財布の中のレシート、捨てちゃって",
+      "reason": "手放すと新しい流れが入ってくる",
+      "actionRating": 2,
+      "luckyColor": "金",
+      "icon": "receipt-2"
+    },
+    {
+      "id": "action_005",
+      "category": "life",
+      "text": "左のポケットに小さな石を入れて出かけて",
+      "reason": "お守り代わりに安心感アップ",
+      "actionRating": 4,
+      "luckyColor": "灰色",
+      "icon": "circle-dot"
+    },
+    {
+      "id": "action_006",
+      "category": "life",
+      "text": "朝ごはんをいつもと違う場所で食べて",
+      "reason": "視点が変わると発想も変わる",
+      "actionRating": 3,
+      "luckyColor": "オレンジ",
+      "icon": "coffee"
+    },
+    {
+      "id": "action_007",
+      "category": "social",
+      "text": "今日は誰かを先に褒めてみて",
+      "reason": "褒め言葉は巡り巡って返ってくる",
+      "actionRating": 4,
+      "luckyColor": "ピンク",
+      "icon": "heart"
+    },
+    {
+      "id": "action_008",
+      "category": "life",
+      "text": "使ってない古いアプリ、1個消してみて",
+      "reason": "スマホの余白が心の余白に",
+      "actionRating": 2,
+      "luckyColor": "青",
+      "icon": "apps-off"
+    },
+    {
+      "id": "action_009",
+      "category": "mood",
+      "text": "気になる本を1ページだけ読んでみて",
+      "reason": "きっかけは小さくていい",
+      "actionRating": 5,
+      "luckyColor": "茶色",
+      "icon": "book"
+    },
+    {
+      "id": "action_010",
+      "category": "life",
+      "text": "靴を磨いてから出かけて",
+      "reason": "足元が整うと1日が整う",
+      "actionRating": 3,
+      "luckyColor": "黒",
+      "icon": "shoe"
+    },
+    {
+      "id": "action_011",
+      "category": "mood",
+      "text": "ランチはあえて一人で食べてみて",
+      "reason": "静かな時間が良いアイデアを運ぶ",
+      "actionRating": 4,
+      "luckyColor": "紫",
+      "icon": "soup"
+    },
+    {
+      "id": "action_012",
+      "category": "social",
+      "text": "「ありがとう」をいつもより多めに言って",
+      "reason": "感謝の言葉は運気の潤滑油",
+      "actionRating": 2,
+      "luckyColor": "水色",
+      "icon": "mood-smile"
+    },
+    {
+      "id": "action_013",
+      "category": "mood",
+      "text": "右手首に何かアクセサリーをつけて出かけて",
+      "reason": "小さな装いが自信をくれる",
+      "actionRating": 4,
+      "luckyColor": "銀",
+      "icon": "sparkles"
+    },
+    {
+      "id": "action_014",
+      "category": "health",
+      "text": "今日は階段を使ってみて",
+      "reason": "一段ずつの積み重ねが運を呼ぶ",
+      "actionRating": 3,
+      "luckyColor": "赤",
+      "icon": "stairs"
+    },
+    {
+      "id": "action_015",
+      "category": "mood",
+      "text": "気になってたお店に思い切って入ってみて",
+      "reason": "直感に従うと良い出会いがある",
+      "actionRating": 5,
+      "luckyColor": "ベージュ",
+      "icon": "door-enter"
+    },
+    {
+      "id": "action_016",
+      "category": "work",
+      "text": "デスク周りを5分だけ片付けて",
+      "reason": "整った空間が集中力を呼ぶ",
+      "actionRating": 2,
+      "luckyColor": "白",
+      "icon": "layout-grid"
+    },
+    {
+      "id": "action_017",
+      "category": "mood",
+      "text": "空を見上げる時間を作って",
+      "reason": "上を向くと視界も気分も開ける",
+      "actionRating": 4,
+      "luckyColor": "空色",
+      "icon": "cloud"
+    },
+    {
+      "id": "action_018",
+      "category": "mood",
+      "text": "好きな音楽を1曲、朝に聴いて",
+      "reason": "テンションの起点は朝にある",
+      "actionRating": 3,
+      "luckyColor": "黄緑",
+      "icon": "music"
+    },
+    {
+      "id": "action_019",
+      "category": "mood",
+      "text": "「今日はこれでいっか」と1つ手放して",
+      "reason": "完璧を求めすぎない日",
+      "actionRating": 4,
+      "luckyColor": "クリーム",
+      "icon": "feather"
+    },
+    {
+      "id": "action_020",
+      "category": "social",
+      "text": "誰かに小さな親切をしてみて",
+      "reason": "巡り巡って自分に返ってくる",
+      "actionRating": 5,
+      "luckyColor": "金",
+      "icon": "gift"
+    },
+    {
+      "id": "action_021",
+      "category": "life",
+      "text": "今日は窓を全部開けて空気を入れ替えて",
+      "reason": "新しい風が運気も入れ替える",
+      "actionRating": 4,
+      "luckyColor": "白",
+      "icon": "wind"
+    },
+    {
+      "id": "action_022",
+      "category": "life",
+      "text": "使ってない引き出しを1つだけ片付けて",
+      "reason": "隠れた場所ほど運気が滞りやすい",
+      "actionRating": 3,
+      "luckyColor": "ベージュ",
+      "icon": "archive"
+    },
+    {
+      "id": "action_023",
+      "category": "life",
+      "text": "玄関の靴をきれいに並べ直して",
+      "reason": "入り口が整うと良い縁が入りやすい",
+      "actionRating": 4,
+      "luckyColor": "黄色",
+      "icon": "door"
+    },
+    {
+      "id": "action_024",
+      "category": "life",
+      "text": "観葉植物や花に水をあげて",
+      "reason": "育てる気持ちが巡り巡って自分に返る",
+      "actionRating": 3,
+      "luckyColor": "緑",
+      "icon": "plant"
+    },
+    {
+      "id": "action_025",
+      "category": "life",
+      "text": "カーテンをいつもより早めに開けて",
+      "reason": "朝の光が1日の流れを整える",
+      "actionRating": 4,
+      "luckyColor": "オレンジ",
+      "icon": "sun"
+    },
+    {
+      "id": "action_026",
+      "category": "life",
+      "text": "冷蔵庫の賞味期限切れをチェックして",
+      "reason": "溜め込みを手放すと運気が巡る",
+      "actionRating": 2,
+      "luckyColor": "白",
+      "icon": "fridge"
+    },
+    {
+      "id": "action_027",
+      "category": "life",
+      "text": "枕カバーやシーツを新しくして",
+      "reason": "眠りの質が運気の土台になる",
+      "actionRating": 4,
+      "luckyColor": "水色",
+      "icon": "bed"
+    },
+    {
+      "id": "action_028",
+      "category": "life",
+      "text": "お気に入りのマグカップを使って",
+      "reason": "小さなお気に入りが1日の質を上げる",
+      "actionRating": 3,
+      "luckyColor": "ピンク",
+      "icon": "cup"
+    },
+    {
+      "id": "action_029",
+      "category": "life",
+      "text": "財布の向きを揃えてしまってみて",
+      "reason": "整った財布は金運を呼ぶ",
+      "actionRating": 3,
+      "luckyColor": "金",
+      "icon": "wallet"
+    },
+    {
+      "id": "action_030",
+      "category": "life",
+      "text": "玄関に小さな鏡を置いてみて",
+      "reason": "光を取り込む場所は運気も明るくなる",
+      "actionRating": 4,
+      "luckyColor": "銀",
+      "icon": "bulb"
+    },
+    {
+      "id": "action_031",
+      "category": "life",
+      "text": "今日は普段使わない食器を使ってみて",
+      "reason": "変化が新しい気分を連れてくる",
+      "actionRating": 3,
+      "luckyColor": "白",
+      "icon": "cup"
+    },
+    {
+      "id": "action_032",
+      "category": "social",
+      "text": "家族に「今日どうだった？」と聞いてみて",
+      "reason": "聞く姿勢が信頼を積み重ねる",
+      "actionRating": 4,
+      "luckyColor": "オレンジ",
+      "icon": "message-circle"
+    },
+    {
+      "id": "action_033",
+      "category": "social",
+      "text": "昔の友達に「元気？」とメッセージを送ってみて",
+      "reason": "忘れかけた縁が思わぬ幸運を運ぶ",
+      "actionRating": 5,
+      "luckyColor": "黄色",
+      "icon": "send"
+    },
+    {
+      "id": "action_034",
+      "category": "social",
+      "text": "誰かの話を最後まで遮らずに聞いてみて",
+      "reason": "聞き上手は信頼を集める",
+      "actionRating": 4,
+      "luckyColor": "水色",
+      "icon": "ear"
+    },
+    {
+      "id": "action_035",
+      "category": "social",
+      "text": "すれ違う人に会釈してみて",
+      "reason": "小さな挨拶が空気を和らげる",
+      "actionRating": 3,
+      "luckyColor": "ピンク",
+      "icon": "walk"
+    },
+    {
+      "id": "action_036",
+      "category": "social",
+      "text": "誰かにありがとうの一言メモを渡して",
+      "reason": "言葉の形にすると気持ちが強く届く",
+      "actionRating": 4,
+      "luckyColor": "黄色",
+      "icon": "notes"
+    },
+    {
+      "id": "action_037",
+      "category": "social",
+      "text": "苦手な人にも今日は一言挨拶して",
+      "reason": "小さな一歩が関係をやわらげる",
+      "actionRating": 2,
+      "luckyColor": "灰色",
+      "icon": "message"
+    },
+    {
+      "id": "action_038",
+      "category": "social",
+      "text": "職場や学校で誰かの手伝いを申し出て",
+      "reason": "助け合いは良い縁の種になる",
+      "actionRating": 4,
+      "luckyColor": "オレンジ",
+      "icon": "users"
+    },
+    {
+      "id": "action_039",
+      "category": "social",
+      "text": "家族や友人に写真を1枚送ってみて",
+      "reason": "共有した瞬間が絆を深める",
+      "actionRating": 3,
+      "luckyColor": "ピンク",
+      "icon": "photo"
+    },
+    {
+      "id": "action_040",
+      "category": "social",
+      "text": "誰かの誕生日や記念日をさりげなく覚えておいて",
+      "reason": "覚えていてくれる人は特別に思われる",
+      "actionRating": 3,
+      "luckyColor": "紫",
+      "icon": "calendar-event"
+    },
+    {
+      "id": "action_041",
+      "category": "social",
+      "text": "電話で済ませずにビデオ通話にしてみて",
+      "reason": "顔を見る安心感が縁を強める",
+      "actionRating": 4,
+      "luckyColor": "青",
+      "icon": "video"
+    },
+    {
+      "id": "action_042",
+      "category": "social",
+      "text": "今日は誰かを笑わせることを意識して",
+      "reason": "笑いは一番シンプルな贈り物",
+      "actionRating": 5,
+      "luckyColor": "黄色",
+      "icon": "mood-happy"
+    },
+    {
+      "id": "action_043",
+      "category": "social",
+      "text": "相手の良いところを1つ見つけて伝えて",
+      "reason": "言葉にした瞬間から関係が変わる",
+      "actionRating": 4,
+      "luckyColor": "ピンク",
+      "icon": "heart"
+    },
+    {
+      "id": "action_044",
+      "category": "social",
+      "text": "グループの中で聞き役に回ってみて",
+      "reason": "受け止める側にまわると信頼が集まる",
+      "actionRating": 3,
+      "luckyColor": "水色",
+      "icon": "users"
+    },
+    {
+      "id": "action_045",
+      "category": "work",
+      "text": "今日のタスクを3つだけに絞ってみて",
+      "reason": "絞ることで集中力が研ぎ澄まされる",
+      "actionRating": 4,
+      "luckyColor": "青",
+      "icon": "list-check"
+    },
+    {
+      "id": "action_046",
+      "category": "work",
+      "text": "デスクの上のケーブル類をまとめて",
+      "reason": "整った環境が仕事運を底上げする",
+      "actionRating": 3,
+      "luckyColor": "灰色",
+      "icon": "plug"
+    },
+    {
+      "id": "action_047",
+      "category": "work",
+      "text": "メールの返信を後回しにせず先に片付けて",
+      "reason": "溜め込みが減ると流れが良くなる",
+      "actionRating": 3,
+      "luckyColor": "白",
+      "icon": "mail"
+    },
+    {
+      "id": "action_048",
+      "category": "work",
+      "text": "会議で1回は自分から発言してみて",
+      "reason": "声を出すことがチャンスを引き寄せる",
+      "actionRating": 4,
+      "luckyColor": "オレンジ",
+      "icon": "microphone"
+    },
+    {
+      "id": "action_049",
+      "category": "work",
+      "text": "今日は誰かの仕事を一言ねぎらって",
+      "reason": "ねぎらいの言葉はチームの運気を上げる",
+      "actionRating": 4,
+      "luckyColor": "黄色",
+      "icon": "thumb-up"
+    },
+    {
+      "id": "action_050",
+      "category": "work",
+      "text": "昼休みは仕事の話を完全にオフにして",
+      "reason": "切り替えが午後の集中力を生む",
+      "actionRating": 3,
+      "luckyColor": "緑",
+      "icon": "coffee"
+    },
+    {
+      "id": "action_051",
+      "category": "work",
+      "text": "目標を紙に書き出してみて",
+      "reason": "書くことで実現の力が強まる",
+      "actionRating": 4,
+      "luckyColor": "紫",
+      "icon": "pencil"
+    },
+    {
+      "id": "action_052",
+      "category": "work",
+      "text": "苦手なタスクを最初に片付けてみて",
+      "reason": "難所を越えると流れが軽くなる",
+      "actionRating": 3,
+      "luckyColor": "赤",
+      "icon": "flag"
+    },
+    {
+      "id": "action_053",
+      "category": "work",
+      "text": "デスクに小さな植物や写真を置いてみて",
+      "reason": "目に入るものが気分を左右する",
+      "actionRating": 3,
+      "luckyColor": "緑",
+      "icon": "plant"
+    },
+    {
+      "id": "action_054",
+      "category": "work",
+      "text": "今日は「ありがとう」を仕事相手にも伝えて",
+      "reason": "感謝は次の仕事運を呼び込む",
+      "actionRating": 4,
+      "luckyColor": "ピンク",
+      "icon": "heart-handshake"
+    },
+    {
+      "id": "action_055",
+      "category": "work",
+      "text": "スケジュールに10分の余白を入れてみて",
+      "reason": "余白が思わぬチャンスを拾う",
+      "actionRating": 4,
+      "luckyColor": "水色",
+      "icon": "clock"
+    },
+    {
+      "id": "action_056",
+      "category": "work",
+      "text": "名刺入れやペンケースの中を整理して",
+      "reason": "道具が整うと仕事運も整う",
+      "actionRating": 2,
+      "luckyColor": "白",
+      "icon": "briefcase"
+    },
+    {
+      "id": "action_057",
+      "category": "work",
+      "text": "今日は締切より早めに提出してみて",
+      "reason": "早さが信頼を積み重ねる",
+      "actionRating": 5,
+      "luckyColor": "金",
+      "icon": "send"
+    },
+    {
+      "id": "action_058",
+      "category": "work",
+      "text": "ミスを認めて素直に謝ってみて",
+      "reason": "誠実さが次のチャンスを引き寄せる",
+      "actionRating": 3,
+      "luckyColor": "灰色",
+      "icon": "alert-circle"
+    },
+    {
+      "id": "action_059",
+      "category": "work",
+      "text": "新しいやり方を1つだけ試してみて",
+      "reason": "小さな挑戦が突破口になる",
+      "actionRating": 4,
+      "luckyColor": "オレンジ",
+      "icon": "bulb"
+    },
+    {
+      "id": "action_060",
+      "category": "money",
+      "text": "お財布の中の小銭を整理してみて",
+      "reason": "整った財布はお金の巡りを良くする",
+      "actionRating": 3,
+      "luckyColor": "金",
+      "icon": "coin"
+    },
+    {
+      "id": "action_061",
+      "category": "money",
+      "text": "欲しいものリストを1つ見直して",
+      "reason": "本当に必要か見直すと無駄遣いが減る",
+      "actionRating": 3,
+      "luckyColor": "白",
+      "icon": "list"
+    },
+    {
+      "id": "action_062",
+      "category": "money",
+      "text": "使っていないサブスクを1つ見直して",
+      "reason": "小さな支出の整理が金運を底上げする",
+      "actionRating": 4,
+      "luckyColor": "灰色",
+      "icon": "credit-card"
+    },
+    {
+      "id": "action_063",
+      "category": "money",
+      "text": "お財布に新札を1枚入れてみて",
+      "reason": "清潔なお金は良い流れを呼ぶ",
+      "actionRating": 4,
+      "luckyColor": "金",
+      "icon": "cash"
+    },
+    {
+      "id": "action_064",
+      "category": "money",
+      "text": "貯金箱や口座に少額でも入金してみて",
+      "reason": "小さな一歩が大きな流れを作る",
+      "actionRating": 5,
+      "luckyColor": "緑",
+      "icon": "pig-money"
+    },
+    {
+      "id": "action_065",
+      "category": "money",
+      "text": "レシートをその日のうちに整理して",
+      "reason": "お金の流れを把握すると安心感が増す",
+      "actionRating": 2,
+      "luckyColor": "白",
+      "icon": "receipt-2"
+    },
+    {
+      "id": "action_066",
+      "category": "money",
+      "text": "誰かに小さなご馳走をしてみて",
+      "reason": "出したお金は巡り巡って返ってくる",
+      "actionRating": 4,
+      "luckyColor": "オレンジ",
+      "icon": "gift"
+    },
+    {
+      "id": "action_067",
+      "category": "money",
+      "text": "家計簿やアプリに今日の支出を記録して",
+      "reason": "記録する習慣が金運の土台になる",
+      "actionRating": 3,
+      "luckyColor": "青",
+      "icon": "notebook"
+    },
+    {
+      "id": "action_068",
+      "category": "money",
+      "text": "財布の中を新しい気分で整えてみて",
+      "reason": "気分を変えると金運の流れも変わる",
+      "actionRating": 3,
+      "luckyColor": "茶色",
+      "icon": "wallet"
+    },
+    {
+      "id": "action_069",
+      "category": "money",
+      "text": "今日は衝動買いを1回だけ我慢してみて",
+      "reason": "我慢が次の良い買い物を引き寄せる",
+      "actionRating": 3,
+      "luckyColor": "灰色",
+      "icon": "shopping-cart-off"
+    },
+    {
+      "id": "action_070",
+      "category": "money",
+      "text": "お金にまつわる本や記事を1つ読んでみて",
+      "reason": "知識がお金との付き合い方を変える",
+      "actionRating": 4,
+      "luckyColor": "茶色",
+      "icon": "book"
+    },
+    {
+      "id": "action_071",
+      "category": "money",
+      "text": "財布の中を五円玉（ご縁）で満たしてみて",
+      "reason": "語呂合わせが気分の後押しになる",
+      "actionRating": 3,
+      "luckyColor": "金",
+      "icon": "coin"
+    },
+    {
+      "id": "action_072",
+      "category": "money",
+      "text": "今日は誰かのお金の相談に乗ってあげて",
+      "reason": "与える姿勢が金運の巡りを良くする",
+      "actionRating": 4,
+      "luckyColor": "緑",
+      "icon": "message-circle"
+    },
+    {
+      "id": "action_073",
+      "category": "money",
+      "text": "ポイントカードやクーポンを整理してみて",
+      "reason": "眠っていた得を掘り起こせるかも",
+      "actionRating": 3,
+      "luckyColor": "黄色",
+      "icon": "ticket"
+    },
+    {
+      "id": "action_074",
+      "category": "money",
+      "text": "今日の出費を1つだけ先延ばしにしてみて",
+      "reason": "一呼吸置くと本当に必要か見えてくる",
+      "actionRating": 2,
+      "luckyColor": "灰色",
+      "icon": "clock"
+    },
+    {
+      "id": "action_075",
+      "category": "health",
+      "text": "今日はエレベーターを使わず階段で",
+      "reason": "一段ずつの積み重ねが活力を生む",
+      "actionRating": 4,
+      "luckyColor": "赤",
+      "icon": "stairs"
+    },
+    {
+      "id": "action_076",
+      "category": "health",
+      "text": "コップ1杯多めに水を飲んでみて",
+      "reason": "水の巡りが体の巡りを整える",
+      "actionRating": 3,
+      "luckyColor": "水色",
+      "icon": "droplet"
+    },
+    {
+      "id": "action_077",
+      "category": "health",
+      "text": "寝る前にスマホを5分早く手放して",
+      "reason": "早めの休息が翌日の運気を底上げする",
+      "actionRating": 4,
+      "luckyColor": "紫",
+      "icon": "moon"
+    },
+    {
+      "id": "action_078",
+      "category": "health",
+      "text": "朝に軽くストレッチをしてみて",
+      "reason": "体をほぐすと気持ちもほぐれる",
+      "actionRating": 4,
+      "luckyColor": "オレンジ",
+      "icon": "stretching"
+    },
+    {
+      "id": "action_079",
+      "category": "health",
+      "text": "いつもより少し早く寝てみて",
+      "reason": "良い眠りが良い1日を作る",
+      "actionRating": 5,
+      "luckyColor": "紺",
+      "icon": "bed"
+    },
+    {
+      "id": "action_080",
+      "category": "health",
+      "text": "深呼吸を3回してから行動を始めて",
+      "reason": "呼吸を整えると心も整う",
+      "actionRating": 3,
+      "luckyColor": "水色",
+      "icon": "wind"
+    },
+    {
+      "id": "action_081",
+      "category": "health",
+      "text": "今日は甘いものを1つ我慢してみて",
+      "reason": "小さな我慢が体の調子を整える",
+      "actionRating": 2,
+      "luckyColor": "白",
+      "icon": "cookie"
+    },
+    {
+      "id": "action_082",
+      "category": "health",
+      "text": "外の空気を吸いに5分だけ外に出て",
+      "reason": "外気に触れると気分がリセットされる",
+      "actionRating": 4,
+      "luckyColor": "緑",
+      "icon": "sun"
+    },
+    {
+      "id": "action_083",
+      "category": "health",
+      "text": "姿勢を正して座ってみて",
+      "reason": "姿勢が整うと気力も整う",
+      "actionRating": 3,
+      "luckyColor": "灰色",
+      "icon": "armchair"
+    },
+    {
+      "id": "action_084",
+      "category": "health",
+      "text": "好きな香りのハンドクリームを使ってみて",
+      "reason": "香りは気分を静かに整える",
+      "actionRating": 3,
+      "luckyColor": "ピンク",
+      "icon": "droplet"
+    },
+    {
+      "id": "action_085",
+      "category": "health",
+      "text": "今日は野菜を1品多く食べてみて",
+      "reason": "体を大事にする日が運気も整える",
+      "actionRating": 4,
+      "luckyColor": "緑",
+      "icon": "salad"
+    },
+    {
+      "id": "action_086",
+      "category": "health",
+      "text": "目を閉じて1分だけ休ませてみて",
+      "reason": "目の疲れをとると頭も軽くなる",
+      "actionRating": 3,
+      "luckyColor": "紫",
+      "icon": "eye"
+    },
+    {
+      "id": "action_087",
+      "category": "health",
+      "text": "湯船にゆっくり浸かってみて",
+      "reason": "温まる時間が1日の疲れを流す",
+      "actionRating": 5,
+      "luckyColor": "オレンジ",
+      "icon": "bath"
+    },
+    {
+      "id": "action_088",
+      "category": "health",
+      "text": "今日は早歩きを意識してみて",
+      "reason": "体温が上がると気分も上向く",
+      "actionRating": 3,
+      "luckyColor": "赤",
+      "icon": "walk"
+    },
+    {
+      "id": "action_089",
+      "category": "health",
+      "text": "肩を回してほぐしてみて",
+      "reason": "固まった場所をほぐすと運気も流れる",
+      "actionRating": 2,
+      "luckyColor": "灰色",
+      "icon": "yoga"
+    },
+    {
+      "id": "action_090",
+      "category": "health",
+      "text": "今日はカフェインを控えめにしてみて",
+      "reason": "体をいたわる選択が巡り巡って返ってくる",
+      "actionRating": 3,
+      "luckyColor": "茶色",
+      "icon": "coffee-off"
+    },
+    {
+      "id": "action_091",
+      "category": "mood",
+      "text": "好きな香りの入浴剤を使ってみて",
+      "reason": "香りが気分を優しく切り替える",
+      "actionRating": 4,
+      "luckyColor": "ラベンダー",
+      "icon": "droplet"
+    },
+    {
+      "id": "action_092",
+      "category": "mood",
+      "text": "お気に入りの服を今日着てみて",
+      "reason": "気分が上がる服は自信を連れてくる",
+      "actionRating": 4,
+      "luckyColor": "赤",
+      "icon": "shirt"
+    },
+    {
+      "id": "action_093",
+      "category": "mood",
+      "text": "窓の外の景色を1分だけ眺めてみて",
+      "reason": "遠くを見ると心にも余白ができる",
+      "actionRating": 3,
+      "luckyColor": "水色",
+      "icon": "window"
+    },
+    {
+      "id": "action_094",
+      "category": "mood",
+      "text": "今日は好きな香りのお茶を淹れてみて",
+      "reason": "温かい一杯が心を落ち着ける",
+      "actionRating": 3,
+      "luckyColor": "緑",
+      "icon": "cup"
+    },
+    {
+      "id": "action_095",
+      "category": "mood",
+      "text": "昔好きだった曲を聴き返してみて",
+      "reason": "懐かしさが今日を優しくする",
+      "actionRating": 4,
+      "luckyColor": "紫",
+      "icon": "music"
+    },
+    {
+      "id": "action_096",
+      "category": "mood",
+      "text": "何も予定のない10分を作ってみて",
+      "reason": "余白が新しい気づきを連れてくる",
+      "actionRating": 4,
+      "luckyColor": "白",
+      "icon": "hourglass"
+    },
+    {
+      "id": "action_097",
+      "category": "mood",
+      "text": "気になっていた場所まで遠回りしてみて",
+      "reason": "寄り道が思わぬ発見を連れてくる",
+      "actionRating": 5,
+      "luckyColor": "オレンジ",
+      "icon": "route"
+    },
+    {
+      "id": "action_098",
+      "category": "mood",
+      "text": "今日見た空の写真を1枚撮ってみて",
+      "reason": "記録する習慣が小さな幸せを増やす",
+      "actionRating": 3,
+      "luckyColor": "水色",
+      "icon": "camera"
+    },
+    {
+      "id": "action_099",
+      "category": "mood",
+      "text": "気分が上がるBGMをかけながら作業してみて",
+      "reason": "音が気分の土台を作る",
+      "actionRating": 4,
+      "luckyColor": "黄色",
+      "icon": "headphones"
+    },
+    {
+      "id": "action_100",
+      "category": "mood",
+      "text": "寝る前に今日良かったことを1つ思い出して",
+      "reason": "締めくくりが明日の気分を左右する",
+      "actionRating": 5,
+      "luckyColor": "紫",
+      "icon": "moon-stars"
+    }
+  ]
+}
