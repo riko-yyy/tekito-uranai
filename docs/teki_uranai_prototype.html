@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>テキトー占い - プロトタイプ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.46.0/tabler-icons.min.css">
+<style>
+  :root {
+    --surface-0: #0e0e0f;
+    --surface-1: #141416;
+    --surface-2: #1c1c1f;
+    --bg-accent: #16233a;
+    --text-primary: #f5f5f6;
+    --text-secondary: #c7c7cc;
+    --text-muted: #85858c;
+    --text-accent: #7ab8ec;
+    --border: #2a2a2e;
+    --border-strong: #3c3c42;
+    --fill-primary: #ffffff;
+    --on-primary: #111113;
+    --radius: 10px;
+    --gold: #e0b84a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--surface-0);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+
+  .phone {
+    max-width: 340px;
+    width: 100%;
+    background: var(--surface-1);
+    border-radius: 24px;
+    padding: 1.25rem;
+    min-height: 620px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .screen { display: none; flex: 1; flex-direction: column; }
+  .screen.active { display: flex; }
+
+  h2 { margin: 0 0 1.25rem; font-size: 20px; }
+  p { margin: 0; }
+
+  /* ---- Screen 1: 今日の運勢 ---- */
+  .today-card {
+    background: var(--surface-2);
+    border-radius: 16px;
+    border: 0.5px solid var(--border);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .today-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--bg-accent);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  .today-icon i { font-size: 28px; color: var(--text-accent); }
+  .today-desc {
+    font-size: 15px; color: var(--text-secondary);
+    margin: 0 0 1.5rem; line-height: 1.6;
+  }
+  .tag-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tag {
+    font-size: 12px; background: var(--surface-1); color: var(--text-secondary);
+    padding: 4px 10px; border-radius: var(--radius);
+  }
+  .btn-primary, .btn-secondary {
+    width: 100%; padding: 12px; border-radius: var(--radius);
+    font-size: 14px; font-weight: 500; margin-bottom: 8px; cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-primary { background: var(--fill-primary); color: var(--on-primary); border: none; }
+  .btn-secondary { background: transparent; border: 0.5px solid var(--border-strong); color: var(--text-primary); }
+
+  /* ---- Screen 2: 履歴 ---- */
+  .eyebrow { font-size: 13px; color: var(--text-muted); margin: 0 0 2px; }
+  .history-list { display: flex; flex-direction: column; gap: 10px; }
+  .history-row {
+    background: var(--surface-2); border-radius: 16px; border: 0.5px solid var(--border);
+    padding: 1rem; display: flex; align-items: center; gap: 12px;
+  }
+  .history-row.faded { opacity: 0.65; }
+  .history-icon {
+    width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%;
+    background: var(--bg-accent); display: flex; align-items: center; justify-content: center;
+  }
+  .history-icon i { font-size: 20px; color: var(--text-accent); }
+  .history-body { flex: 1; min-width: 0; }
+  .history-date { font-size: 12px; color: var(--text-muted); margin: 0 0 2px; }
+  .history-title { font-size: 14px; color: var(--text-primary); margin: 0; font-weight: 500; }
+  .history-row i.ti-chevron-right { font-size: 16px; color: var(--text-muted); flex-shrink: 0; }
+
+  /* ---- Screen 3: お気に入り/プレミアム ---- */
+  .segmented {
+    display: flex; background: var(--surface-2); border-radius: var(--radius);
+    padding: 3px; margin-bottom: 1.25rem; border: 0.5px solid var(--border);
+  }
+  .segmented button {
+    flex: 1; padding: 8px; border: none; background: transparent; color: var(--text-muted);
+    font-size: 13px; border-radius: 7px; cursor: pointer; font-family: inherit; font-weight: 500;
+  }
+  .segmented button.active { background: var(--surface-1); color: var(--text-primary); }
+
+  .sub-panel { display: none; flex-direction: column; gap: 10px; }
+  .sub-panel.active { display: flex; }
+
+  .fav-row {
+    background: var(--surface-2); border-radius: 16px; border: 0.5px solid var(--border);
+    padding: 1rem; display: flex; align-items: center; gap: 12px;
+  }
+  .fav-row .history-icon { background: rgba(224,184,74,0.14); }
+  .fav-row .history-icon i { color: var(--gold); }
+  .fav-row i.ti-star { font-size: 16px; color: var(--gold); flex-shrink: 0; }
+
+  .empty-state {
+    text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: 13px;
+  }
+
+  .premium-card {
+    background: linear-gradient(155deg, #2a2416 0%, var(--surface-2) 55%);
+    border: 0.5px solid #3d3320; border-radius: 16px; padding: 1.25rem;
+    margin-bottom: 10px;
+  }
+  .premium-card .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--gold); background: rgba(224,184,74,0.14);
+    padding: 3px 8px; border-radius: 999px; margin-bottom: 10px;
+  }
+  .premium-card h3 { margin: 0 0 6px; font-size: 15px; }
+  .premium-card p.desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
+  .premium-list { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .premium-list li { font-size: 13px; color: var(--text-secondary); display: flex; gap: 8px; align-items: center; }
+  .premium-list i { color: var(--gold); font-size: 15px; }
+  .btn-gold {
+    width: 100%; padding: 12px; border-radius: var(--radius); border: none;
+    background: var(--gold); color: #1a1608; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+
+  /* ---- Bottom nav ---- */
+  .bottom-nav { display: flex; justify-content: space-around; padding-top: 1rem; margin-top: auto; }
+  .nav-item { text-align: center; background: none; border: none; cursor: pointer; padding: 6px 10px; }
+  .nav-item i { font-size: 20px; color: var(--text-muted); }
+  .nav-item.active i { color: var(--text-primary); }
+
+  .note {
+    max-width: 340px; margin: 14px auto 0; text-align: center;
+    font-size: 12px; color: #5f5f66;
+  }
+</style>
+</head>
+<body>
+
+<div>
+  <div class="phone">
+
+    <!-- Screen 1: 今日の運勢 -->
+    <div class="screen active" id="screen-today">
+      <div class="today-card">
+        <p class="eyebrow">8月23日(日)の運勢</p>
+        <h2>今日は"寄り道"の日</h2>
+        <div class="today-icon"><i class="ti ti-map-pin-2"></i></div>
+        <p class="today-desc">いつもと違う道を1本、通ってみて。<br>小さな発見が待ってるかも。</p>
+        <div class="tag-row">
+          <span class="tag">行動運 ★★★★☆</span>
+          <span class="tag">ラッキーカラー 緑</span>
+        </div>
+        <button class="btn-primary"><i class="ti ti-share-2" style="margin-right:6px;"></i>結果をシェア</button>
+        <button class="btn-secondary">明日また占う</button>
+      </div>
+      <div class="bottom-nav">
+        <button class="nav-item active" onclick="showScreen('today', this)"><i class="ti ti-home"></i></button>
+        <button class="nav-item" onclick="showScreen('history', this)"><i class="ti ti-history"></i></button>
+        <button class="nav-item" onclick="showScreen('fav', this)"><i class="ti ti-star"></i></button>
+      </div>
+    </div>
+
+    <!-- Screen 2: 履歴 -->
+    <div class="screen" id="screen-history">
+      <p class="eyebrow">履歴</p>
+      <h2>これまでの運勢</h2>
+      <div class="history-list">
+        <div class="history-row">
+          <div class="history-icon"><i class="ti ti-map-pin-2"></i></div>
+          <div class="history-body">
+            <p class="history-date">8月23日(日)</p>
+            <p class="history-title">今日は"寄り道"の日</p>
+          </div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="history-row">
+          <div class="history-icon"><i class="ti ti-message-circle"></i></div>
+          <div class="history-body">
+            <p class="history-date">8月22日(土)</p>
+            <p class="history-title">今日は"つながり"の日</p>
+          </div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="history-row">
+          <div class="history-icon"><i class="ti ti-bath"></i></div>
+          <div class="history-body">
+            <p class="history-date">8月21日(金)</p>
+            <p class="history-title">今日は&quot;ゆるめる&quot;の日</p>
+          </div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="history-row faded">
+          <div class="history-icon"><i class="ti ti-coin"></i></div>
+          <div class="history-body">
+            <p class="history-date">8月20日(木)</p>
+            <p class="history-title">今日は"手放す"の日</p>
+          </div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="history-row faded">
+          <div class="history-icon"><i class="ti ti-route"></i></div>
+          <div class="history-body">
+            <p class="history-date">8月19日(水)</p>
+            <p class="history-title">今日は"回り道"の日</p>
+          </div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <button class="nav-item" onclick="showScreen('today', this)"><i class="ti ti-home"></i></button>
+        <button class="nav-item active" onclick="showScreen('history', this)"><i class="ti ti-history"></i></button>
+        <button class="nav-item" onclick="showScreen('fav', this)"><i class="ti ti-star"></i></button>
+      </div>
+    </div>
+
+    <!-- Screen 3: お気に入り / プレミアム -->
+    <div class="screen" id="screen-fav">
+      <p class="eyebrow">マイページ</p>
+      <h2>お気に入り・プレミアム</h2>
+
+      <div class="segmented">
+        <button class="active" onclick="showTab('favlist', this)">お気に入り</button>
+        <button onclick="showTab('premium', this)">プレミアム</button>
+      </div>
+
+      <div class="sub-panel active" id="tab-favlist">
+        <div class="fav-row">
+          <div class="history-icon"><i class="ti ti-book"></i></div>
+          <div class="history-body">
+            <p class="history-date">8月18日(火)</p>
+            <p class="history-title">気になる本を1ページだけ読んでみて</p>
+          </div>
+          <i class="ti ti-star"></i>
+        </div>
+        <div class="fav-row">
+          <div class="history-icon"><i class="ti ti-bath"></i></div>
+          <div class="history-body">
+            <p class="history-date">8月21日(金)</p>
+            <p class="history-title">湯船にゆっくり浸かってみて</p>
+          </div>
+          <i class="ti ti-star"></i>
+        </div>
+        <div class="fav-row">
+          <div class="history-icon"><i class="ti ti-gift"></i></div>
+          <div class="history-body">
+            <p class="history-date">8月15日(土)</p>
+            <p class="history-title">誰かに小さな親切をしてみて</p>
+          </div>
+          <i class="ti ti-star"></i>
+        </div>
+        <p class="empty-state">結果画面の★をタップすると<br>ここに保存されます</p>
+      </div>
+
+      <div class="sub-panel" id="tab-premium">
+        <div class="premium-card">
+          <span class="badge"><i class="ti ti-sparkles" style="font-size:12px;"></i>プレミアム</span>
+          <h3>プレミアムアクション集</h3>
+          <p class="desc">季節限定・恋愛特化など、いつもより濃いアクションパターンが解放されます。</p>
+          <ul class="premium-list">
+            <li><i class="ti ti-check"></i>季節限定アクション（毎月更新）</li>
+            <li><i class="ti ti-check"></i>恋愛運・相性に特化したアクション</li>
+            <li><i class="ti ti-check"></i>広告非表示</li>
+          </ul>
+          <button class="btn-gold">月額プランを見る</button>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="nav-item" onclick="showScreen('today', this)"><i class="ti ti-home"></i></button>
+        <button class="nav-item" onclick="showScreen('history', this)"><i class="ti ti-history"></i></button>
+        <button class="nav-item active" onclick="showScreen('fav', this)"><i class="ti ti-star"></i></button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showScreen(name, btn) {
+    document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+    document.getElementById('screen-' + name).classList.add('active');
+    const nav = btn.closest('.phone').querySelectorAll('.nav-item');
+    nav.forEach(n => n.classList.remove('active'));
+    btn.classList.add('active');
+    // sync active state across all nav bars (since each screen has its own nav)
+    document.querySelectorAll('.bottom-nav').forEach(bar => {
+      bar.querySelectorAll('.nav-item').forEach((n, i) => {
+        n.classList.toggle('active', ['today','history','fav'][i] === name);
+      });
+    });
+  }
+  function showTab(name, btn) {
+    document.querySelectorAll('.sub-panel').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
