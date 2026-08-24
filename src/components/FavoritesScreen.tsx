@@ -1,0 +1,88 @@
+import { useState } from 'react'
+import { BottomNav, type ScreenName } from './BottomNav'
+import type { HistoryEntry } from '../data/types'
+import { formatJapaneseDate } from '../lib/fortune'
+
+type Tab = 'favlist' | 'premium'
+
+interface Props {
+  favorites: HistoryEntry[]
+  activeScreen: ScreenName
+  onNavigate: (screen: ScreenName) => void
+}
+
+export function FavoritesScreen({ favorites, activeScreen, onNavigate }: Props) {
+  const [tab, setTab] = useState<Tab>('favlist')
+
+  return (
+    <div className="screen active">
+      <p className="eyebrow">マイページ</p>
+      <h2>お気に入り・プレミアム</h2>
+
+      <div className="segmented">
+        <button type="button" className={tab === 'favlist' ? 'active' : ''} onClick={() => setTab('favlist')}>
+          お気に入り
+        </button>
+        <button type="button" className={tab === 'premium' ? 'active' : ''} onClick={() => setTab('premium')}>
+          プレミアム
+        </button>
+      </div>
+
+      {tab === 'favlist' && (
+        <div className="sub-panel active">
+          {favorites.map((entry) => (
+            <div key={entry.dateKey} className="fav-row">
+              <div className="history-icon">
+                <i className={`ti ti-${entry.action.icon}`} />
+              </div>
+              <div className="history-body">
+                <p className="history-date">{formatJapaneseDate(new Date(entry.dateKey))}</p>
+                <p className="history-title">{entry.action.text}</p>
+              </div>
+              <i className="ti ti-star" />
+            </div>
+          ))}
+          {favorites.length === 0 && (
+            <p className="empty-state">
+              結果画面の★をタップすると
+              <br />
+              ここに保存されます
+            </p>
+          )}
+        </div>
+      )}
+
+      {tab === 'premium' && (
+        <div className="sub-panel active">
+          <div className="premium-card">
+            <span className="badge">
+              <i className="ti ti-sparkles" style={{ fontSize: 12 }} />
+              プレミアム
+            </span>
+            <h3>プレミアムアクション集</h3>
+            <p className="desc">季節限定・恋愛特化など、いつもより濃いアクションパターンが解放されます。</p>
+            <ul className="premium-list">
+              <li>
+                <i className="ti ti-check" />
+                季節限定アクション(毎月更新)
+              </li>
+              <li>
+                <i className="ti ti-check" />
+                恋愛運・相性に特化したアクション
+              </li>
+              <li>
+                <i className="ti ti-check" />
+                広告非表示
+              </li>
+            </ul>
+            <button type="button" className="btn-gold">
+              月額プランを見る
+            </button>
+          </div>
+        </div>
+      )}
+
+      <BottomNav active={activeScreen} onNavigate={onNavigate} />
+    </div>
+  )
+}
