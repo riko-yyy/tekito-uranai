@@ -9,6 +9,12 @@ export function getDateKey(date: Date): string {
   return `${y}-${m}-${d}`
 }
 
+/** Parses a `getDateKey` string back into a local-midnight Date (avoids the UTC-shift `new Date(dateKey)` has). */
+export function parseDateKey(dateKey: string): Date {
+  const [y, m, d] = dateKey.split('-').map(Number)
+  return new Date(y, m - 1, d)
+}
+
 export function formatJapaneseDate(date: Date): string {
   const weekday = WEEKDAY_LABELS_JP[date.getDay()]
   return `${date.getMonth() + 1}月${date.getDate()}日(${weekday})`

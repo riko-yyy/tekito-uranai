@@ -24,6 +24,7 @@ p {
 
 /* ---- Screen 1: 今日の運勢 ---- */
 .today-card {
+  position: relative;
   background: var(--surface-2);
   border-radius: 16px;
   border: 0.5px solid var(--border);
@@ -199,6 +200,30 @@ p {
   font-size: 16px;
   color: var(--gold);
   flex-shrink: 0;
+}
+.fav-star-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+}
+.today-star-toggle {
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+}
+.today-star-toggle i {
+  font-size: 20px;
+  color: var(--text-muted);
+}
+.today-star-toggle.active i {
+  color: var(--gold);
 }
 
 .empty-state {

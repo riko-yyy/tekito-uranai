@@ -1,6 +1,6 @@
 import { BottomNav, type ScreenName } from './BottomNav'
 import type { HistoryEntry } from '../data/types'
-import { formatJapaneseDate } from '../lib/fortune'
+import { formatJapaneseDate, parseDateKey } from '../lib/fortune'
 
 interface Props {
   entries: HistoryEntry[]
@@ -21,7 +21,7 @@ export function HistoryScreen({ entries, categoryLabel, activeScreen, onNavigate
               <i className={`ti ti-${entry.action.icon}`} />
             </div>
             <div className="history-body">
-              <p className="history-date">{formatJapaneseDate(new Date(entry.dateKey))}</p>
+              <p className="history-date">{formatJapaneseDate(parseDateKey(entry.dateKey))}</p>
               <p className="history-title">今日は&quot;{categoryLabel(entry)}&quot;の日</p>
             </div>
             <i className="ti ti-chevron-right" />
