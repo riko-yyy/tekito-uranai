@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "./.claude/dev-node20.sh",
+      "runtimeArgs": [],
+      "port": 5173
+    }
+  ]
+}
