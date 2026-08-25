@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BottomNav, type ScreenName } from './BottomNav'
 import { StarIcon } from './StarIcon'
+import { InfoNote, HISTORY_PERSISTENCE_NOTE } from './InfoNote'
 import type { HistoryEntry } from '../data/types'
 import { formatJapaneseDate, parseDateKey } from '../lib/fortune'
 
@@ -32,6 +33,9 @@ export function FavoritesScreen({ favorites, onToggleFavorite, activeScreen, onN
 
       {tab === 'favlist' && (
         <div className="sub-panel active">
+          <div className="fav-list-header">
+            <InfoNote text={HISTORY_PERSISTENCE_NOTE} align="right" />
+          </div>
           {favorites.map((entry) => (
             <div key={entry.dateKey} className="fav-row">
               <div className="history-icon">

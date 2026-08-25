@@ -1,4 +1,5 @@
 import { BottomNav, type ScreenName } from './BottomNav'
+import { InfoNote, HISTORY_PERSISTENCE_NOTE } from './InfoNote'
 import type { HistoryEntry } from '../data/types'
 import { formatJapaneseDate, parseDateKey } from '../lib/fortune'
 
@@ -14,7 +15,10 @@ export function HistoryScreen({ entries, categoryLabel, onSelect, activeScreen, 
   return (
     <div className="screen active">
       <p className="eyebrow">履歴</p>
-      <h2>これまでの運勢</h2>
+      <h2>
+        これまでの運勢
+        <InfoNote text={HISTORY_PERSISTENCE_NOTE} />
+      </h2>
       <div className="history-list">
         {entries.map((entry, index) => (
           <button
