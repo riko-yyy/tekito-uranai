@@ -48,15 +48,6 @@
       "icon": "backpack"
     },
     {
-      "id": "action_003",
-      "category": "social",
-      "text": "気になってた人に「最近どう？」と送ってみて",
-      "reason": "ちょっとした一言が縁をつなぐ",
-      "actionRating": 5,
-      "luckyColor": "黄色",
-      "icon": "message-circle"
-    },
-    {
       "id": "action_004",
       "category": "money",
       "text": "財布の中のレシート、捨てちゃって",
@@ -318,15 +309,6 @@
       "icon": "message-circle"
     },
     {
-      "id": "action_033",
-      "category": "social",
-      "text": "昔の友達に「元気？」とメッセージを送ってみて",
-      "reason": "忘れかけた縁が思わぬ幸運を運ぶ",
-      "actionRating": 5,
-      "luckyColor": "黄色",
-      "icon": "send"
-    },
-    {
       "id": "action_034",
       "category": "social",
       "text": "誰かの話を最後まで遮らずに聞いてみて",
@@ -352,15 +334,6 @@
       "actionRating": 4,
       "luckyColor": "黄色",
       "icon": "notes"
-    },
-    {
-      "id": "action_037",
-      "category": "social",
-      "text": "苦手な人にも今日は一言挨拶して",
-      "reason": "小さな一歩が関係をやわらげる",
-      "actionRating": 2,
-      "luckyColor": "灰色",
-      "icon": "message"
     },
     {
       "id": "action_038",
@@ -390,15 +363,6 @@
       "icon": "calendar-event"
     },
     {
-      "id": "action_041",
-      "category": "social",
-      "text": "電話で済ませずにビデオ通話にしてみて",
-      "reason": "顔を見る安心感が縁を強める",
-      "actionRating": 4,
-      "luckyColor": "青",
-      "icon": "video"
-    },
-    {
       "id": "action_042",
       "category": "social",
       "text": "今日は誰かを笑わせることを意識して",
@@ -406,15 +370,6 @@
       "actionRating": 5,
       "luckyColor": "黄色",
       "icon": "mood-happy"
-    },
-    {
-      "id": "action_043",
-      "category": "social",
-      "text": "相手の良いところを1つ見つけて伝えて",
-      "reason": "言葉にした瞬間から関係が変わる",
-      "actionRating": 4,
-      "luckyColor": "ピンク",
-      "icon": "heart"
     },
     {
       "id": "action_044",
@@ -451,15 +406,6 @@
       "actionRating": 3,
       "luckyColor": "白",
       "icon": "mail"
-    },
-    {
-      "id": "action_048",
-      "category": "work",
-      "text": "会議で1回は自分から発言してみて",
-      "reason": "声を出すことがチャンスを引き寄せる",
-      "actionRating": 4,
-      "luckyColor": "オレンジ",
-      "icon": "microphone"
     },
     {
       "id": "action_049",
@@ -667,15 +613,6 @@
       "actionRating": 3,
       "luckyColor": "金",
       "icon": "coin"
-    },
-    {
-      "id": "action_072",
-      "category": "money",
-      "text": "今日は誰かのお金の相談に乗ってあげて",
-      "reason": "与える姿勢が金運の巡りを良くする",
-      "actionRating": 4,
-      "luckyColor": "緑",
-      "icon": "message-circle"
     },
     {
       "id": "action_073",
@@ -928,6 +865,69 @@
       "actionRating": 5,
       "luckyColor": "紫",
       "icon": "moon-stars"
+    },
+    {
+      "id": "action_101",
+      "category": "life",
+      "text": "使ってない充電ケーブルを1本まとめてみて",
+      "reason": "小さな整理が巡りを良くする",
+      "actionRating": 3,
+      "luckyColor": "灰色",
+      "icon": "plug"
+    },
+    {
+      "id": "action_102",
+      "category": "life",
+      "text": "今日は爪を短く整えてみて",
+      "reason": "手先が整うと物事の運びも整う",
+      "actionRating": 3,
+      "luckyColor": "白",
+      "icon": "sparkles"
+    },
+    {
+      "id": "action_103",
+      "category": "life",
+      "text": "今日は鏡を軽く拭いてみて",
+      "reason": "映すものが綺麗だと自分も整う",
+      "actionRating": 3,
+      "luckyColor": "銀",
+      "icon": "bulb"
+    },
+    {
+      "id": "action_104",
+      "category": "mood",
+      "text": "今日感じたことを一言だけメモしてみて",
+      "reason": "書き留める習慣が心を軽くする",
+      "actionRating": 4,
+      "luckyColor": "水色",
+      "icon": "notebook"
+    },
+    {
+      "id": "action_105",
+      "category": "mood",
+      "text": "好きな写真を1枚、待ち受けにしてみて",
+      "reason": "目に入るものが気分の土台になる",
+      "actionRating": 3,
+      "luckyColor": "黄色",
+      "icon": "camera"
+    },
+    {
+      "id": "action_106",
+      "category": "health",
+      "text": "今日は背伸びを1回だけしてみて",
+      "reason": "体を伸ばすと気持ちもほぐれる",
+      "actionRating": 3,
+      "luckyColor": "オレンジ",
+      "icon": "stretching"
+    },
+    {
+      "id": "action_107",
+      "category": "health",
+      "text": "耳を軽くマッサージしてみて",
+      "reason": "血の巡りが整うと頭も軽くなる",
+      "actionRating": 2,
+      "luckyColor": "紫",
+      "icon": "ear"
     }
   ]
 }
