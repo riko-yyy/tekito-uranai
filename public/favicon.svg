@@ -29,7 +29,7 @@
 
   <!-- background -->
   <rect width="1024" height="1024" fill="url(#bg)"/>
-  <circle cx="512" cy="400" r="420" fill="url(#glow)"/>
+  <circle cx="512" cy="400" r="420" fill="url(#glow)"/><g transform="translate(512 512) scale(1.8) translate(-512 -512)">
 
   <!-- fortune slip (omikuji), slightly rotated, centered -->
   <g transform="rotate(-6 512 542)" filter="url(#softShadow)">
@@ -53,4 +53,4 @@
              C 650 335, 667 318, 672 268 Z" fill="url(#gold)"/>
   </g>
   <circle cx="628" cy="424" r="9" fill="url(#gold)" opacity="0.85"/>
-</svg>
+</g></svg>
