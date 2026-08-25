@@ -1,5 +1,6 @@
 import { BottomNav, type ScreenName } from './BottomNav'
 import type { Action } from '../data/types'
+import { generateShareImage } from '../lib/shareImage'
 
 interface Props {
   action: Action
@@ -11,8 +12,39 @@ interface Props {
   onNavigate: (screen: ScreenName) => void
 }
 
-function shareResult(action: Action, categoryLabel: string) {
+function downloadBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+async function shareResult(action: Action, categoryLabel: string, dateLabel: string) {
   const text = `今日は"${categoryLabel}"の日\n${action.text}\n${action.reason}`
+
+  let imageBlob: Blob | null = null
+  try {
+    imageBlob = await generateShareImage({ action, categoryLabel, dateLabel })
+  } catch {
+    imageBlob = null
+  }
+
+  if (imageBlob) {
+    const file = new File([imageBlob], 'tekito-uranai.png', { type: 'image/png' })
+    if (navigator.canShare?.({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], text })
+      } catch {
+        /* user cancelled share sheet */
+      }
+      return
+    }
+    downloadBlob(imageBlob, 'tekito-uranai.png')
+    return
+  }
+
   if (navigator.share) {
     navigator.share({ text }).catch(() => {
       /* user cancelled share sheet */
@@ -56,7 +88,7 @@ export function TodayScreen({
           <span className="tag">行動運 {'★'.repeat(action.actionRating)}{'☆'.repeat(5 - action.actionRating)}</span>
           <span className="tag">ラッキーカラー {action.luckyColor}</span>
         </div>
-        <button type="button" className="btn-primary" onClick={() => shareResult(action, categoryLabel)}>
+        <button type="button" className="btn-primary" onClick={() => shareResult(action, categoryLabel, dateLabel)}>
           <i className="ti ti-share-2" style={{ marginRight: 6 }} />
           結果をシェア
         </button>
