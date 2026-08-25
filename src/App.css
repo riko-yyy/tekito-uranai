@@ -8,6 +8,15 @@
   flex-direction: column;
 }
 
+@media (max-width: 480px) {
+  .phone {
+    border-radius: 0;
+    min-height: 100dvh;
+    padding: calc(1.25rem + env(safe-area-inset-top)) calc(1.25rem + env(safe-area-inset-right))
+      calc(1.25rem + env(safe-area-inset-bottom)) calc(1.25rem + env(safe-area-inset-left));
+  }
+}
+
 .screen {
   display: flex;
   flex: 1;

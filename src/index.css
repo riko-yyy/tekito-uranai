@@ -38,3 +38,15 @@ body {
   width: 100%;
   max-width: 340px;
 }
+
+/* On real phone-sized viewports, drop the "phone mockup" card and let the app fill the screen. */
+@media (max-width: 480px) {
+  body {
+    padding: 0;
+  }
+
+  #root {
+    max-width: none;
+    min-height: 100dvh;
+  }
+}
