@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { Action, ActionsDB, HistoryEntry, StoredHistoryEntry } from '../data/types'
-import { getDateKey, pickActionForDate } from '../lib/fortune'
-import { getAllHistory, getHistoryEntry, saveHistoryEntry, setFavorite } from '../lib/historyStore'
+import { daysBefore, excludeRecentActions, getDateKey, pickAction } from '../lib/fortune'
+import { getAllHistory, saveHistoryEntry, setFavorite } from '../lib/historyStore'
+
+const RECENT_WINDOW_DAYS = 7
 
 function resolveEntry(stored: StoredHistoryEntry, actions: Action[]): HistoryEntry | null {
   const action = actions.find((a) => a.id === stored.actionId)
@@ -19,13 +21,22 @@ export function useHistory(actionsDB: ActionsDB | null) {
 
     async function load() {
       const todayKey = getDateKey(new Date())
-      const existing = await getHistoryEntry(todayKey)
-      if (!existing) {
-        const action = pickActionForDate(actionsDB!.actions, todayKey)
-        await saveHistoryEntry({ dateKey: todayKey, actionId: action.id, isFavorite: false })
+      let stored = await getAllHistory()
+
+      const alreadyDrawn = stored.some((entry) => entry.dateKey === todayKey)
+      if (!alreadyDrawn) {
+        const recentIds = stored
+          .filter((entry) => daysBefore(entry.dateKey, todayKey) <= RECENT_WINDOW_DAYS)
+          .map((entry) => entry.actionId)
+        const pool = excludeRecentActions(actionsDB!.actions, recentIds)
+        const index = Math.floor(Math.random() * pool.length)
+        const action = pickAction(pool, index)
+
+        const newEntry: StoredHistoryEntry = { dateKey: todayKey, actionId: action.id, isFavorite: false }
+        await saveHistoryEntry(newEntry)
+        stored = [newEntry, ...stored]
       }
 
-      const stored = await getAllHistory()
       if (cancelled) return
 
       const resolved = stored

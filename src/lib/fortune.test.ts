@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatJapaneseDate, getDateKey, hasDrawnToday, parseDateKey, pickActionForDate } from './fortune'
+import { daysBefore, excludeRecentActions, formatJapaneseDate, getDateKey, parseDateKey, pickAction } from './fortune'
 import type { Action } from '../data/types'
 
 function makeAction(id: string): Action {
@@ -39,36 +39,52 @@ describe('formatJapaneseDate', () => {
   })
 })
 
-describe('pickActionForDate', () => {
+describe('pickAction', () => {
   const actions = [makeAction('a'), makeAction('b'), makeAction('c'), makeAction('d')]
 
-  it('is deterministic for the same date key', () => {
-    const first = pickActionForDate(actions, '2026-08-24')
-    const second = pickActionForDate(actions, '2026-08-24')
-    expect(second).toBe(first)
+  it('returns the action at the given index', () => {
+    expect(pickAction(actions, 0).id).toBe('a')
+    expect(pickAction(actions, 2).id).toBe('c')
   })
 
-  it('can return different actions for different date keys', () => {
-    const results = new Set(
-      ['2026-08-24', '2026-08-25', '2026-08-26', '2026-08-27', '2026-08-28'].map(
-        (key) => pickActionForDate(actions, key).id,
-      ),
-    )
-    expect(results.size).toBeGreaterThan(1)
+  it('wraps out-of-range indexes via modulo', () => {
+    expect(pickAction(actions, 4).id).toBe('a')
+    expect(pickAction(actions, 5).id).toBe('b')
   })
 
   it('throws when there are no actions to pick from', () => {
-    expect(() => pickActionForDate([], '2026-08-24')).toThrow()
+    expect(() => pickAction([], 0)).toThrow()
   })
 })
 
-describe('hasDrawnToday', () => {
-  it('is false when nothing has been drawn yet', () => {
-    expect(hasDrawnToday(null, '2026-08-24')).toBe(false)
+describe('excludeRecentActions', () => {
+  const actions = [makeAction('a'), makeAction('b'), makeAction('c')]
+
+  it('filters out actions whose id is excluded', () => {
+    const result = excludeRecentActions(actions, ['a'])
+    expect(result.map((a) => a.id)).toEqual(['b', 'c'])
   })
 
-  it('is true only when the last drawn date matches today', () => {
-    expect(hasDrawnToday('2026-08-24', '2026-08-24')).toBe(true)
-    expect(hasDrawnToday('2026-08-23', '2026-08-24')).toBe(false)
+  it('falls back to the full list when everything would be excluded', () => {
+    const result = excludeRecentActions(actions, ['a', 'b', 'c'])
+    expect(result).toEqual(actions)
+  })
+
+  it('returns everything unchanged when nothing is excluded', () => {
+    expect(excludeRecentActions(actions, [])).toEqual(actions)
+  })
+})
+
+describe('daysBefore', () => {
+  it('is 0 for the same date', () => {
+    expect(daysBefore('2026-08-24', '2026-08-24')).toBe(0)
+  })
+
+  it('is positive when dateKey is before referenceDateKey', () => {
+    expect(daysBefore('2026-08-17', '2026-08-24')).toBe(7)
+  })
+
+  it('is negative when dateKey is after referenceDateKey', () => {
+    expect(daysBefore('2026-08-25', '2026-08-24')).toBe(-1)
   })
 })

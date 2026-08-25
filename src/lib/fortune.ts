@@ -20,24 +20,23 @@ export function formatJapaneseDate(date: Date): string {
   return `${date.getMonth() + 1}月${date.getDate()}日(${weekday})`
 }
 
-function hashString(value: string): number {
-  let hash = 0
-  for (let i = 0; i < value.length; i++) {
-    hash = (hash * 31 + value.charCodeAt(i)) | 0
-  }
-  return Math.abs(hash)
-}
-
-/** Deterministically picks one action for a given date key — same date always yields the same action. */
-export function pickActionForDate(actions: Action[], dateKey: string): Action {
+/** Picks the action at `index` — the randomness itself lives outside this function, at the caller. */
+export function pickAction(actions: Action[], index: number): Action {
   if (actions.length === 0) {
     throw new Error('actions must not be empty')
   }
-  const index = hashString(dateKey) % actions.length
-  return actions[index]
+  return actions[index % actions.length]
 }
 
-/** True when the fortune for `dateKey` has already been drawn (i.e. it matches the last drawn date). */
-export function hasDrawnToday(lastDrawnDateKey: string | null, dateKey: string): boolean {
-  return lastDrawnDateKey === dateKey
+/** Filters out actions whose id is in `excludedIds`, unless that would leave nothing to pick from. */
+export function excludeRecentActions(actions: Action[], excludedIds: readonly string[]): Action[] {
+  const excluded = new Set(excludedIds)
+  const remaining = actions.filter((a) => !excluded.has(a.id))
+  return remaining.length > 0 ? remaining : actions
+}
+
+/** Whole days between two dateKeys — positive when `dateKey` is before `referenceDateKey`. */
+export function daysBefore(dateKey: string, referenceDateKey: string): number {
+  const ms = parseDateKey(referenceDateKey).getTime() - parseDateKey(dateKey).getTime()
+  return Math.round(ms / 86_400_000)
 }
