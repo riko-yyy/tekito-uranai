@@ -205,8 +205,7 @@ p {
 .fav-row .history-icon i {
   color: var(--gold);
 }
-.fav-row i.ti-star {
-  font-size: 16px;
+.fav-row svg {
   color: var(--gold);
   flex-shrink: 0;
 }
@@ -226,12 +225,9 @@ p {
   position: absolute;
   top: 1.25rem;
   right: 1.25rem;
-}
-.today-star-toggle i {
-  font-size: 20px;
   color: var(--text-muted);
 }
-.today-star-toggle.active i {
+.today-star-toggle.active {
   color: var(--gold);
 }
 

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { BottomNav, type ScreenName } from './BottomNav'
+import { StarIcon } from './StarIcon'
 import type { HistoryEntry } from '../data/types'
 import { formatJapaneseDate, parseDateKey } from '../lib/fortune'
 
@@ -46,7 +47,7 @@ export function FavoritesScreen({ favorites, onToggleFavorite, activeScreen, onN
                 aria-label="お気に入りから外す"
                 onClick={() => onToggleFavorite(entry.dateKey)}
               >
-                <i className="ti ti-star" />
+                <StarIcon filled />
               </button>
             </div>
           ))}

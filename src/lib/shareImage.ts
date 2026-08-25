@@ -99,9 +99,13 @@ export async function generateShareImage({ action, categoryLabel, dateLabel }: S
   ctx.fillText('テキトー占い', WIDTH / 2, HEIGHT - 100)
 
   return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (blob) resolve(blob)
-      else reject(new Error('canvas toBlob failed'))
-    }, 'image/png')
+    canvas.toBlob(
+      (blob) => {
+        if (blob) resolve(blob)
+        else reject(new Error('canvas toBlob failed'))
+      },
+      'image/jpeg',
+      0.9,
+    )
   })
 }
