@@ -6,12 +6,19 @@ import { formatJapaneseDate, getDateKey, parseDateKey } from './lib/fortune'
 import type { ScreenName } from './components/BottomNav'
 import { TodayScreen } from './components/TodayScreen'
 import { HistoryScreen } from './components/HistoryScreen'
+import { HistoryDetailScreen } from './components/HistoryDetailScreen'
 import { FavoritesScreen } from './components/FavoritesScreen'
 
 function App() {
   const { data, loading: actionsLoading, error } = useActionsData()
   const { entries, loading: historyLoading, toggleFavorite } = useHistory(data)
   const [screen, setScreen] = useState<ScreenName>('today')
+  const [historyDetailKey, setHistoryDetailKey] = useState<string | null>(null)
+
+  const navigate = (next: ScreenName) => {
+    setHistoryDetailKey(null)
+    setScreen(next)
+  }
 
   if (actionsLoading || historyLoading) {
     return (
@@ -34,6 +41,7 @@ function App() {
 
   const todayKey = getDateKey(new Date())
   const today = entries.find((entry) => entry.dateKey === todayKey)
+  const historyDetailEntry = historyDetailKey ? entries.find((e) => e.dateKey === historyDetailKey) : undefined
 
   return (
     <div className="phone">
@@ -45,15 +53,24 @@ function App() {
           isFavorite={today.isFavorite}
           onToggleFavorite={() => toggleFavorite(today.dateKey)}
           activeScreen={screen}
-          onNavigate={setScreen}
+          onNavigate={navigate}
         />
       )}
-      {screen === 'history' && (
+      {screen === 'history' && historyDetailEntry && (
+        <HistoryDetailScreen
+          entry={historyDetailEntry}
+          categoryLabel={categoryLabel(historyDetailEntry.action.category)}
+          onToggleFavorite={() => toggleFavorite(historyDetailEntry.dateKey)}
+          onBack={() => setHistoryDetailKey(null)}
+        />
+      )}
+      {screen === 'history' && !historyDetailEntry && (
         <HistoryScreen
           entries={entries}
           categoryLabel={(entry) => categoryLabel(entry.action.category)}
+          onSelect={setHistoryDetailKey}
           activeScreen={screen}
-          onNavigate={setScreen}
+          onNavigate={navigate}
         />
       )}
       {screen === 'fav' && (
@@ -61,7 +78,7 @@ function App() {
           favorites={entries.filter((entry) => entry.isFavorite)}
           onToggleFavorite={toggleFavorite}
           activeScreen={screen}
-          onNavigate={setScreen}
+          onNavigate={navigate}
         />
       )}
     </div>

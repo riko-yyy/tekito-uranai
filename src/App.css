@@ -100,6 +100,23 @@ p {
   cursor: not-allowed;
 }
 
+.detail-back {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+.detail-back i {
+  font-size: 18px;
+}
+
 /* ---- Screen 2: 履歴 ---- */
 .eyebrow {
   font-size: 13px;
@@ -112,6 +129,7 @@ p {
   gap: 10px;
 }
 .history-row {
+  width: 100%;
   background: var(--surface-2);
   border-radius: 16px;
   border: 0.5px solid var(--border);
@@ -119,6 +137,10 @@ p {
   display: flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  color: inherit;
 }
 .history-row.faded {
   opacity: 0.65;

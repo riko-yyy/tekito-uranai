@@ -1,8 +1,6 @@
 import { BottomNav, type ScreenName } from './BottomNav'
-import { StarIcon } from './StarIcon'
+import { FortuneCard } from './FortuneCard'
 import type { Action } from '../data/types'
-import { generateShareImage } from '../lib/shareImage'
-import { getDateKey } from '../lib/fortune'
 
 interface Props {
   action: Action
@@ -12,49 +10,6 @@ interface Props {
   onToggleFavorite: () => void
   activeScreen: ScreenName
   onNavigate: (screen: ScreenName) => void
-}
-
-function downloadBlob(blob: Blob, filename: string) {
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = filename
-  a.click()
-  URL.revokeObjectURL(url)
-}
-
-async function shareResult(action: Action, categoryLabel: string, dateLabel: string) {
-  const text = `今日は"${categoryLabel}"の日\n${action.text}\n${action.reason}`
-
-  let imageBlob: Blob | null = null
-  try {
-    imageBlob = await generateShareImage({ action, categoryLabel, dateLabel })
-  } catch {
-    imageBlob = null
-  }
-
-  if (imageBlob) {
-    const filename = `tekito-uranai-${getDateKey(new Date())}.jpg`
-    const file = new File([imageBlob], filename, { type: 'image/jpeg' })
-    if (navigator.canShare?.({ files: [file] })) {
-      try {
-        await navigator.share({ files: [file], text })
-      } catch {
-        /* user cancelled share sheet */
-      }
-      return
-    }
-    downloadBlob(imageBlob, filename)
-    return
-  }
-
-  if (navigator.share) {
-    navigator.share({ text }).catch(() => {
-      /* user cancelled share sheet */
-    })
-    return
-  }
-  navigator.clipboard?.writeText(text)
 }
 
 export function TodayScreen({
@@ -68,37 +23,17 @@ export function TodayScreen({
 }: Props) {
   return (
     <div className="screen active">
-      <div className="today-card">
-        <button
-          type="button"
-          className={`today-star-toggle${isFavorite ? ' active' : ''}`}
-          aria-label="お気に入りに登録"
-          onClick={onToggleFavorite}
-        >
-          <StarIcon filled={isFavorite} />
-        </button>
-        <p className="eyebrow">{dateLabel}の運勢</p>
-        <h2>今日は&quot;{categoryLabel}&quot;の日</h2>
-        <div className="today-icon">
-          <i className={`ti ti-${action.icon}`} />
-        </div>
-        <p className="today-desc">
-          {action.text}
-          <br />
-          {action.reason}
-        </p>
-        <div className="tag-row">
-          <span className="tag">行動運 {'★'.repeat(action.actionRating)}{'☆'.repeat(5 - action.actionRating)}</span>
-          <span className="tag">ラッキーカラー {action.luckyColor}</span>
-        </div>
-        <button type="button" className="btn-primary" onClick={() => shareResult(action, categoryLabel, dateLabel)}>
-          <i className="ti ti-share-2" style={{ marginRight: 6 }} />
-          結果をシェア
-        </button>
+      <FortuneCard
+        action={action}
+        categoryLabel={categoryLabel}
+        dateLabel={dateLabel}
+        isFavorite={isFavorite}
+        onToggleFavorite={onToggleFavorite}
+      >
         <button type="button" className="btn-secondary" disabled title="占いは1日1回までです">
           明日また占う
         </button>
-      </div>
+      </FortuneCard>
       <BottomNav active={activeScreen} onNavigate={onNavigate} />
     </div>
   )
