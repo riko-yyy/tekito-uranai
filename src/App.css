@@ -27,6 +27,52 @@ h2 {
   margin: 0 0 1.25rem;
   font-size: 20px;
 }
+
+.info-note {
+  position: relative;
+  display: inline-block;
+  margin-left: 6px;
+}
+.info-note-trigger {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  vertical-align: middle;
+  display: inline-flex;
+}
+.info-note-trigger i {
+  font-size: 16px;
+}
+.info-note-body {
+  position: absolute;
+  top: 100%;
+  margin-top: 8px;
+  width: 240px;
+  max-width: 70vw;
+  background: var(--surface-2);
+  border: 0.5px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  z-index: 10;
+  text-align: left;
+}
+.info-note-body-left {
+  left: 0;
+}
+.info-note-body-right {
+  right: 0;
+}
+.fav-list-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: -4px;
+}
 p {
   margin: 0;
 }
