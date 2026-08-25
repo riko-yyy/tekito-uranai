@@ -1,6 +1,8 @@
 import { BottomNav, type ScreenName } from './BottomNav'
+import { StarIcon } from './StarIcon'
 import type { Action } from '../data/types'
 import { generateShareImage } from '../lib/shareImage'
+import { getDateKey } from '../lib/fortune'
 
 interface Props {
   action: Action
@@ -32,7 +34,8 @@ async function shareResult(action: Action, categoryLabel: string, dateLabel: str
   }
 
   if (imageBlob) {
-    const file = new File([imageBlob], 'tekito-uranai.png', { type: 'image/png' })
+    const filename = `tekito-uranai-${getDateKey(new Date())}.jpg`
+    const file = new File([imageBlob], filename, { type: 'image/jpeg' })
     if (navigator.canShare?.({ files: [file] })) {
       try {
         await navigator.share({ files: [file], text })
@@ -41,7 +44,7 @@ async function shareResult(action: Action, categoryLabel: string, dateLabel: str
       }
       return
     }
-    downloadBlob(imageBlob, 'tekito-uranai.png')
+    downloadBlob(imageBlob, filename)
     return
   }
 
@@ -72,7 +75,7 @@ export function TodayScreen({
           aria-label="お気に入りに登録"
           onClick={onToggleFavorite}
         >
-          <i className="ti ti-star" />
+          <StarIcon filled={isFavorite} />
         </button>
         <p className="eyebrow">{dateLabel}の運勢</p>
         <h2>今日は&quot;{categoryLabel}&quot;の日</h2>
