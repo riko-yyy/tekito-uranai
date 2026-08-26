@@ -1,14 +1,20 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { Action, ActionsDB, HistoryEntry, StoredHistoryEntry } from '../data/types'
 import { daysBefore, excludeRecentActions, getDateKey, pickAction } from '../lib/fortune'
-import { getAllHistory, saveHistoryEntry, setFavorite } from '../lib/historyStore'
+import { getAllHistory, saveHistoryEntry, setCompleted, setFavorite } from '../lib/historyStore'
 
 const RECENT_WINDOW_DAYS = 7
 
 function resolveEntry(stored: StoredHistoryEntry, actions: Action[]): HistoryEntry | null {
   const action = actions.find((a) => a.id === stored.actionId)
   if (!action) return null
-  return { dateKey: stored.dateKey, action, isFavorite: stored.isFavorite }
+  return {
+    dateKey: stored.dateKey,
+    action,
+    isFavorite: stored.isFavorite,
+    isCompleted: stored.isCompleted,
+    completedAt: stored.completedAt,
+  }
 }
 
 export function useHistory(actionsDB: ActionsDB | null) {
@@ -32,7 +38,13 @@ export function useHistory(actionsDB: ActionsDB | null) {
         const index = Math.floor(Math.random() * pool.length)
         const action = pickAction(pool, index)
 
-        const newEntry: StoredHistoryEntry = { dateKey: todayKey, actionId: action.id, isFavorite: false }
+        const newEntry: StoredHistoryEntry = {
+          dateKey: todayKey,
+          actionId: action.id,
+          isFavorite: false,
+          isCompleted: false,
+          completedAt: null,
+        }
         await saveHistoryEntry(newEntry)
         stored = [newEntry, ...stored]
       }
@@ -60,5 +72,17 @@ export function useHistory(actionsDB: ActionsDB | null) {
     })
   }, [])
 
-  return { entries, loading, toggleFavorite }
+  const toggleCompleted = useCallback(async (dateKey: string) => {
+    setEntries((prev) => {
+      const target = prev.find((e) => e.dateKey === dateKey)
+      if (target) void setCompleted(dateKey, !target.isCompleted)
+      return prev.map((e) =>
+        e.dateKey === dateKey
+          ? { ...e, isCompleted: !e.isCompleted, completedAt: !e.isCompleted ? new Date().toISOString() : null }
+          : e,
+      )
+    })
+  }, [])
+
+  return { entries, loading, toggleFavorite, toggleCompleted }
 }

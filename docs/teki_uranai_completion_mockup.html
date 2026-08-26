@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>テキトー占い - アクション完了モックアップ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.46.0/tabler-icons.min.css">
+<style>
+  :root {
+    --surface-0: #0e0e0f;
+    --surface-1: #141416;
+    --surface-2: #1c1c1f;
+    --bg-accent: #16233a;
+    --bg-gold: rgba(224,184,74,0.14);
+    --text-primary: #f5f5f6;
+    --text-secondary: #c7c7cc;
+    --text-muted: #85858c;
+    --text-accent: #7ab8ec;
+    --border: #2a2a2e;
+    --border-strong: #3c3c42;
+    --fill-primary: #ffffff;
+    --on-primary: #111113;
+    --radius: 10px;
+    --gold: #e0b84a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--surface-0);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+    color: var(--text-primary);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 28px;
+    padding: 32px 16px;
+  }
+
+  .col { display: flex; flex-direction: column; align-items: center; }
+  .col-label {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .phone {
+    width: 320px;
+    background: var(--surface-1);
+    border-radius: 24px;
+    padding: 1.25rem;
+    min-height: 560px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h2 { margin: 0 0 1.25rem; font-size: 19px; }
+  p { margin: 0; }
+
+  .today-card {
+    background: var(--surface-2);
+    border-radius: 16px;
+    border: 0.5px solid var(--border);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    transition: border-color .2s ease;
+  }
+  .today-card.done {
+    border-color: rgba(224,184,74,0.4);
+  }
+
+  .today-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--bg-accent);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    position: relative;
+    transition: background .2s ease;
+  }
+  .today-card.done .today-icon { background: var(--bg-gold); }
+  .today-icon i { font-size: 28px; color: var(--text-accent); transition: color .2s ease; }
+  .today-card.done .today-icon i { color: var(--gold); }
+
+  .check-badge {
+    position: absolute; bottom: -4px; right: -4px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--surface-2);
+    display: none; align-items: center; justify-content: center;
+  }
+  .today-card.done .check-badge { display: flex; }
+  .check-badge i { font-size: 12px; color: #1a1608; }
+
+  .today-desc {
+    font-size: 15px; color: var(--text-secondary);
+    margin: 0 0 1.25rem; line-height: 1.6;
+  }
+  .tag-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .tag {
+    font-size: 12px; background: var(--surface-1); color: var(--text-secondary);
+    padding: 4px 10px; border-radius: var(--radius);
+  }
+
+  /* 完了トグル行 */
+  .complete-row {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface-1); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 10px 12px; margin-bottom: 14px;
+    cursor: pointer; user-select: none; transition: border-color .15s ease;
+  }
+  .complete-row:hover { border-color: var(--border-strong); }
+  .complete-row .check-circle {
+    width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+    border: 1.5px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s ease;
+  }
+  .complete-row .check-circle i { font-size: 13px; opacity: 0; color: #1a1608; transition: opacity .15s ease; }
+  .today-card.done .complete-row .check-circle {
+    background: var(--gold); border-color: var(--gold);
+  }
+  .today-card.done .complete-row .check-circle i { opacity: 1; }
+  .complete-row .label { font-size: 13px; color: var(--text-secondary); text-align: left; flex: 1; }
+  .today-card.done .complete-row .label { color: var(--gold); }
+
+  .btn-primary, .btn-secondary, .btn-gold {
+    width: 100%; padding: 12px; border-radius: var(--radius);
+    font-size: 14px; font-weight: 500; margin-bottom: 8px; cursor: pointer;
+    font-family: inherit; border: none;
+  }
+  .btn-primary { background: var(--fill-primary); color: var(--on-primary); }
+  .btn-secondary { background: transparent; border: 0.5px solid var(--border-strong); color: var(--text-primary); }
+  .btn-gold { background: var(--gold); color: #1a1608; font-weight: 600; display: none; }
+  .today-card.done .btn-gold { display: block; }
+  .today-card.done .btn-primary { display: none; }
+
+  .hint {
+    font-size: 11.5px; color: var(--text-muted); margin-top: 10px; line-height: 1.5;
+  }
+
+  /* 履歴側の完了バッジ表示例 */
+  .history-list { display: flex; flex-direction: column; gap: 10px; }
+  .history-row {
+    background: var(--surface-2); border-radius: 16px; border: 0.5px solid var(--border);
+    padding: 1rem; display: flex; align-items: center; gap: 12px;
+  }
+  .history-icon {
+    width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%;
+    background: var(--bg-accent); display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .history-icon i { font-size: 20px; color: var(--text-accent); }
+  .history-icon .mini-check {
+    position: absolute; bottom: -2px; right: -2px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--surface-2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .history-icon .mini-check i { font-size: 9px; color: #1a1608; }
+  .history-body { flex: 1; min-width: 0; }
+  .history-date { font-size: 12px; color: var(--text-muted); margin: 0 0 2px; }
+  .history-title { font-size: 14px; color: var(--text-primary); margin: 0; font-weight: 500; }
+  .history-status { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .history-status.done { color: var(--gold); }
+</style>
+</head>
+<body>
+
+  <div class="col">
+    <div class="col-label">① 未完了（今まで通り）</div>
+    <div class="phone">
+      <p style="font-size:13px;color:var(--text-muted);margin:0 0 4px;">8月23日(日)の運勢</p>
+      <h2>今日は"寄り道"の日</h2>
+
+      <div class="today-card" id="card1">
+        <div class="today-icon">
+          <i class="ti ti-map-pin-2"></i>
+          <div class="check-badge"><i class="ti ti-check"></i></div>
+        </div>
+        <p class="today-desc">いつもと違う道を1本、通ってみて。<br>小さな発見が待ってるかも。</p>
+        <div class="tag-row">
+          <span class="tag">行動運 ★★★★☆</span>
+          <span class="tag">ラッキーカラー 緑</span>
+        </div>
+
+        <div class="complete-row" onclick="document.getElementById('card1').classList.toggle('done')">
+          <div class="check-circle"><i class="ti ti-check"></i></div>
+          <span class="label">これ、やった</span>
+        </div>
+
+        <button class="btn-primary"><i class="ti ti-share-2" style="margin-right:6px;"></i>結果をシェア</button>
+        <button class="btn-gold"><i class="ti ti-share-2" style="margin-right:6px;"></i>達成をシェア</button>
+        <button class="btn-secondary">明日また占う</button>
+      </div>
+      <p class="hint">「これ、やった」をタップすると完了状態に切り替わります（クリックして試せます）</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="col-label">② 完了後の状態</div>
+    <div class="phone">
+      <p style="font-size:13px;color:var(--text-muted);margin:0 0 4px;">8月23日(日)の運勢</p>
+      <h2>今日は"寄り道"の日</h2>
+
+      <div class="today-card done" id="card2">
+        <div class="today-icon">
+          <i class="ti ti-map-pin-2"></i>
+          <div class="check-badge"><i class="ti ti-check"></i></div>
+        </div>
+        <p class="today-desc">いつもと違う道を1本、通ってみて。<br>小さな発見が待ってるかも。</p>
+        <div class="tag-row">
+          <span class="tag">行動運 ★★★★☆</span>
+          <span class="tag">ラッキーカラー 緑</span>
+        </div>
+
+        <div class="complete-row" onclick="document.getElementById('card2').classList.toggle('done')">
+          <div class="check-circle"><i class="ti ti-check"></i></div>
+          <span class="label">やった！</span>
+        </div>
+
+        <button class="btn-primary"><i class="ti ti-share-2" style="margin-right:6px;"></i>結果をシェア</button>
+        <button class="btn-gold"><i class="ti ti-share-2" style="margin-right:6px;"></i>達成をシェア</button>
+        <button class="btn-secondary">明日また占う</button>
+      </div>
+      <p class="hint">完了すると「達成をシェア」ボタンに切り替わる（＝当初の結果シェアとは別の、有言実行アピール用シェア）</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="col-label">③ 履歴側にも完了バッジを表示</div>
+    <div class="phone">
+      <p class="history-date" style="font-size:13px;color:var(--text-muted);margin:0 0 2px;">履歴</p>
+      <h2>これまでの運勢</h2>
+      <div class="history-list">
+        <div class="history-row">
+          <div class="history-icon">
+            <i class="ti ti-map-pin-2"></i>
+            <div class="mini-check"><i class="ti ti-check"></i></div>
+          </div>
+          <div class="history-body">
+            <p class="history-date">8月23日(日)</p>
+            <p class="history-title">今日は"寄り道"の日</p>
+            <p class="history-status done">達成済み</p>
+          </div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="history-row">
+          <div class="history-icon">
+            <i class="ti ti-message-circle"></i>
+          </div>
+          <div class="history-body">
+            <p class="history-date">8月22日(土)</p>
+            <p class="history-title">今日は"つながり"の日</p>
+            <p class="history-status">未実施</p>
+          </div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+        <div class="history-row">
+          <div class="history-icon">
+            <i class="ti ti-bath"></i>
+            <div class="mini-check"><i class="ti ti-check"></i></div>
+          </div>
+          <div class="history-body">
+            <p class="history-date">8月21日(金)</p>
+            <p class="history-title">今日は"ゆるめる"の日</p>
+            <p class="history-status done">達成済み</p>
+          </div>
+          <i class="ti ti-chevron-right"></i>
+        </div>
+      </div>
+      <p class="hint">isCompleted が true のものにチェックバッジ＋「達成済み」ラベル。isFavorite と同じ構造で持てる。</p>
+    </div>
+  </div>
+
+</body>
+</html>

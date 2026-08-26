@@ -24,6 +24,8 @@ export interface HistoryEntry {
   dateKey: string
   action: Action
   isFavorite: boolean
+  isCompleted: boolean
+  completedAt: string | null
 }
 
 /** Persisted shape in IndexedDB — references an action by id rather than embedding it, so storage stays small and in sync with the actions DB. */
@@ -31,4 +33,6 @@ export interface StoredHistoryEntry {
   dateKey: string
   actionId: string
   isFavorite: boolean
+  isCompleted: boolean
+  completedAt: string | null
 }

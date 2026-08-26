@@ -11,12 +11,14 @@ function downloadBlob(blob: Blob, filename: string) {
   URL.revokeObjectURL(url)
 }
 
-export async function shareResult(action: Action, categoryLabel: string, dateLabel: string) {
-  const text = `今日は"${categoryLabel}"の日\n${action.text}\n${action.reason}`
+export async function shareResult(action: Action, categoryLabel: string, dateLabel: string, isCompleted: boolean) {
+  const text = isCompleted
+    ? `有言実行!今日は"${categoryLabel}"の日\n${action.text}\n${action.reason}`
+    : `今日は"${categoryLabel}"の日\n${action.text}\n${action.reason}`
 
   let imageBlob: Blob | null = null
   try {
-    imageBlob = await generateShareImage({ action, categoryLabel, dateLabel })
+    imageBlob = await generateShareImage({ action, categoryLabel, dateLabel, isCompleted })
   } catch {
     imageBlob = null
   }

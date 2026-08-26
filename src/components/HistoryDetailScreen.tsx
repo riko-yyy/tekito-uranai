@@ -22,6 +22,7 @@ export function HistoryDetailScreen({ entry, categoryLabel, onToggleFavorite, on
         dateLabel={formatJapaneseDate(parseDateKey(entry.dateKey))}
         isFavorite={entry.isFavorite}
         onToggleFavorite={onToggleFavorite}
+        isCompleted={entry.isCompleted}
       />
     </div>
   )

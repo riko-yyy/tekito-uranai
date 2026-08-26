@@ -8,6 +8,8 @@ interface Props {
   dateLabel: string
   isFavorite: boolean
   onToggleFavorite: () => void
+  isCompleted: boolean
+  onToggleCompleted: () => void
   activeScreen: ScreenName
   onNavigate: (screen: ScreenName) => void
 }
@@ -18,6 +20,8 @@ export function TodayScreen({
   dateLabel,
   isFavorite,
   onToggleFavorite,
+  isCompleted,
+  onToggleCompleted,
   activeScreen,
   onNavigate,
 }: Props) {
@@ -29,6 +33,8 @@ export function TodayScreen({
         dateLabel={dateLabel}
         isFavorite={isFavorite}
         onToggleFavorite={onToggleFavorite}
+        isCompleted={isCompleted}
+        onToggleCompleted={onToggleCompleted}
       >
         <button type="button" className="btn-secondary" disabled title="占いは1日1回までです">
           明日また占う
