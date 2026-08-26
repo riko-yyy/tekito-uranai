@@ -33,9 +33,15 @@ interface ShareImageParams {
   action: Action
   categoryLabel: string
   dateLabel: string
+  isCompleted: boolean
 }
 
-export async function generateShareImage({ action, categoryLabel, dateLabel }: ShareImageParams): Promise<Blob> {
+export async function generateShareImage({
+  action,
+  categoryLabel,
+  dateLabel,
+  isCompleted,
+}: ShareImageParams): Promise<Blob> {
   const canvas = document.createElement('canvas')
   canvas.width = WIDTH
   canvas.height = HEIGHT
@@ -50,27 +56,62 @@ export async function generateShareImage({ action, categoryLabel, dateLabel }: S
   ctx.fillRect(0, 0, WIDTH, HEIGHT)
 
   const glow = ctx.createRadialGradient(WIDTH / 2, HEIGHT * 0.36, 0, WIDTH / 2, HEIGHT * 0.36, WIDTH * 0.65)
-  glow.addColorStop(0, '#2a3f63')
-  glow.addColorStop(0.55, '#16233a')
+  if (isCompleted) {
+    glow.addColorStop(0, '#3a3320')
+    glow.addColorStop(0.55, '#231d10')
+  } else {
+    glow.addColorStop(0, '#2a3f63')
+    glow.addColorStop(0.55, '#16233a')
+  }
   glow.addColorStop(1, 'rgba(14,14,15,0)')
   ctx.fillStyle = glow
   ctx.fillRect(0, 0, WIDTH, HEIGHT)
 
+  const logoSize = 140
+  const logoX = (WIDTH - logoSize) / 2
+  const logoY = 90
   try {
     const logo = await loadImage('/icons/icon-512.png')
-    const logoSize = 140
-    ctx.drawImage(logo, (WIDTH - logoSize) / 2, 90, logoSize, logoSize)
+    ctx.drawImage(logo, logoX, logoY, logoSize, logoSize)
   } catch {
     /* logo is a decorative nice-to-have; skip if it fails to load */
   }
 
+  if (isCompleted) {
+    const badgeR = 20
+    const badgeCx = logoX + logoSize - 6
+    const badgeCy = logoY + logoSize - 6
+    ctx.beginPath()
+    ctx.arc(badgeCx, badgeCy, badgeR, 0, Math.PI * 2)
+    ctx.fillStyle = '#e0b84a'
+    ctx.fill()
+    ctx.strokeStyle = '#15151a'
+    ctx.lineWidth = 4
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.moveTo(badgeCx - 9, badgeCy)
+    ctx.lineTo(badgeCx - 3, badgeCy + 7)
+    ctx.lineTo(badgeCx + 10, badgeCy - 9)
+    ctx.strokeStyle = '#1a1608'
+    ctx.lineWidth = 4
+    ctx.lineCap = 'round'
+    ctx.lineJoin = 'round'
+    ctx.stroke()
+  }
+
   ctx.textAlign = 'center'
+
+  if (isCompleted) {
+    ctx.fillStyle = '#e0b84a'
+    ctx.font = `700 30px ${FONT_FAMILY}`
+    ctx.fillText('有言実行!', WIDTH / 2, 270)
+  }
 
   ctx.fillStyle = '#85858c'
   ctx.font = `400 32px ${FONT_FAMILY}`
   ctx.fillText(`${dateLabel}の運勢`, WIDTH / 2, 320)
 
-  ctx.fillStyle = '#f5f5f6'
+  ctx.fillStyle = isCompleted ? '#e0b84a' : '#f5f5f6'
   ctx.font = `700 64px ${FONT_FAMILY}`
   ctx.fillText(`今日は"${categoryLabel}"の日`, WIDTH / 2, 400)
 
@@ -95,7 +136,7 @@ export async function generateShareImage({ action, categoryLabel, dateLabel }: S
   ctx.fillText(`ラッキーカラー ${action.luckyColor}`, WIDTH / 2, y)
 
   ctx.font = `500 36px ${FONT_FAMILY}`
-  ctx.fillStyle = '#7ab8ec'
+  ctx.fillStyle = isCompleted ? '#e0b84a' : '#7ab8ec'
   ctx.fillText('テキトー占い', WIDTH / 2, HEIGHT - 100)
 
   return new Promise((resolve, reject) => {

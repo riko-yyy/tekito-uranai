@@ -29,10 +29,18 @@ export function HistoryScreen({ entries, categoryLabel, onSelect, activeScreen, 
           >
             <div className="history-icon">
               <i className={`ti ti-${entry.action.icon}`} />
+              {entry.isCompleted && (
+                <div className="mini-check">
+                  <i className="ti ti-check" />
+                </div>
+              )}
             </div>
             <div className="history-body">
               <p className="history-date">{formatJapaneseDate(parseDateKey(entry.dateKey))}</p>
               <p className="history-title">今日は&quot;{categoryLabel(entry)}&quot;の日</p>
+              <p className={`history-status${entry.isCompleted ? ' done' : ''}`}>
+                {entry.isCompleted ? '達成済み' : '未実施'}
+              </p>
             </div>
             <i className="ti ti-chevron-right" />
           </button>

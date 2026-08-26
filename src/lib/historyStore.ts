@@ -25,15 +25,25 @@ function getDB() {
   return dbPromise
 }
 
+/** Fills in fields that older saved records may not have (e.g. isCompleted/completedAt added later). */
+function normalize(entry: StoredHistoryEntry): StoredHistoryEntry {
+  return {
+    ...entry,
+    isCompleted: entry.isCompleted ?? false,
+    completedAt: entry.completedAt ?? null,
+  }
+}
+
 export async function getAllHistory(): Promise<StoredHistoryEntry[]> {
   const db = await getDB()
   const all = await db.getAll(STORE_NAME)
-  return all.sort((a, b) => (a.dateKey < b.dateKey ? 1 : -1))
+  return all.map(normalize).sort((a, b) => (a.dateKey < b.dateKey ? 1 : -1))
 }
 
 export async function getHistoryEntry(dateKey: string): Promise<StoredHistoryEntry | undefined> {
   const db = await getDB()
-  return db.get(STORE_NAME, dateKey)
+  const entry = await db.get(STORE_NAME, dateKey)
+  return entry ? normalize(entry) : undefined
 }
 
 export async function saveHistoryEntry(entry: StoredHistoryEntry): Promise<void> {
@@ -46,4 +56,15 @@ export async function setFavorite(dateKey: string, isFavorite: boolean): Promise
   const entry = await db.get(STORE_NAME, dateKey)
   if (!entry) return
   await db.put(STORE_NAME, { ...entry, isFavorite })
+}
+
+export async function setCompleted(dateKey: string, isCompleted: boolean): Promise<void> {
+  const db = await getDB()
+  const entry = await db.get(STORE_NAME, dateKey)
+  if (!entry) return
+  await db.put(STORE_NAME, {
+    ...entry,
+    isCompleted,
+    completedAt: isCompleted ? new Date().toISOString() : null,
+  })
 }

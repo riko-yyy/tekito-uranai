@@ -11,7 +11,7 @@ import { FavoritesScreen } from './components/FavoritesScreen'
 
 function App() {
   const { data, loading: actionsLoading, error } = useActionsData()
-  const { entries, loading: historyLoading, toggleFavorite } = useHistory(data)
+  const { entries, loading: historyLoading, toggleFavorite, toggleCompleted } = useHistory(data)
   const [screen, setScreen] = useState<ScreenName>('today')
   const [historyDetailKey, setHistoryDetailKey] = useState<string | null>(null)
 
@@ -52,6 +52,8 @@ function App() {
           dateLabel={formatJapaneseDate(parseDateKey(today.dateKey))}
           isFavorite={today.isFavorite}
           onToggleFavorite={() => toggleFavorite(today.dateKey)}
+          isCompleted={today.isCompleted}
+          onToggleCompleted={() => toggleCompleted(today.dateKey)}
           activeScreen={screen}
           onNavigate={navigate}
         />
