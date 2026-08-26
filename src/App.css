@@ -68,11 +68,6 @@ h2 {
 .info-note-body-right {
   right: 0;
 }
-.fav-list-header {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: -4px;
-}
 p {
   margin: 0;
 }
