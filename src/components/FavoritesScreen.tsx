@@ -15,12 +15,12 @@ export function FavoritesScreen({ favorites, onToggleFavorite, activeScreen, onN
   return (
     <div className="screen active">
       <p className="eyebrow">マイページ</p>
-      <h2>お気に入り</h2>
+      <h2>
+        お気に入り
+        <InfoNote text={HISTORY_PERSISTENCE_NOTE} />
+      </h2>
 
       <div className="sub-panel active">
-        <div className="fav-list-header">
-          <InfoNote text={HISTORY_PERSISTENCE_NOTE} align="right" />
-        </div>
         {favorites.map((entry) => (
           <div key={entry.dateKey} className="fav-row">
             <div className="history-icon">
