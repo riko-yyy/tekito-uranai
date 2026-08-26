@@ -10,7 +10,7 @@ const MAX_TEXT_WIDTH = WIDTH - 220
 
 // Baseline-to-baseline gaps. Kept as named constants and reused for both the
 // height calculation and the actual draw pass, so they can't drift apart.
-const GAP_LOGO_TO_BADGE = 46
+const GAP_LOGO_TO_BADGE = 70
 const GAP_BADGE_TO_DATE = 46
 const GAP_LOGO_TO_DATE = 56
 const GAP_DATE_TO_HEADLINE = 74
