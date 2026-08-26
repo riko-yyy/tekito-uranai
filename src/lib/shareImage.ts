@@ -12,7 +12,10 @@ const MAX_TEXT_WIDTH = WIDTH - 220
 // height calculation and the actual draw pass, so they can't drift apart.
 const GAP_LOGO_TO_BADGE = 70
 const GAP_BADGE_TO_DATE = 46
-const GAP_LOGO_TO_DATE = 56
+// Matches the completed path's logo->badge->date total, so the uncompleted
+// layout (which skips the badge/label) still reaches the same overall height
+// and every element below lines up at the same position either way.
+const GAP_LOGO_TO_DATE = GAP_LOGO_TO_BADGE + GAP_BADGE_TO_DATE
 const GAP_DATE_TO_HEADLINE = 74
 const GAP_HEADLINE_TO_ACTION = 78
 const ACTION_LINE_GAP = 58
