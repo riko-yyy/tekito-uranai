@@ -332,32 +332,7 @@ p {
   flex-shrink: 0;
 }
 
-/* ---- Screen 3: お気に入り/プレミアム ---- */
-.segmented {
-  display: flex;
-  background: var(--surface-2);
-  border-radius: var(--radius);
-  padding: 3px;
-  margin-bottom: 1.25rem;
-  border: 0.5px solid var(--border);
-}
-.segmented button {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 13px;
-  border-radius: 7px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 500;
-}
-.segmented button.active {
-  background: var(--surface-1);
-  color: var(--text-primary);
-}
-
+/* ---- Screen 3: お気に入り ---- */
 .sub-panel {
   display: flex;
   flex-direction: column;
@@ -412,53 +387,6 @@ p {
   font-size: 13px;
 }
 
-.premium-card {
-  background: linear-gradient(155deg, #2a2416 0%, var(--surface-2) 55%);
-  border: 0.5px solid #3d3320;
-  border-radius: 16px;
-  padding: 1.25rem;
-  margin-bottom: 10px;
-}
-.premium-card .badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  color: var(--gold);
-  background: rgba(224, 184, 74, 0.14);
-  padding: 3px 8px;
-  border-radius: 999px;
-  margin-bottom: 10px;
-}
-.premium-card h3 {
-  margin: 0 0 6px;
-  font-size: 15px;
-}
-.premium-card p.desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 12px;
-}
-.premium-list {
-  list-style: none;
-  margin: 0 0 14px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.premium-list li {
-  font-size: 13px;
-  color: var(--text-secondary);
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-.premium-list i {
-  color: var(--gold);
-  font-size: 15px;
-}
 .btn-gold {
   width: 100%;
   padding: 12px;
